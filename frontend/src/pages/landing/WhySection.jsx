@@ -1,30 +1,22 @@
 import React from 'react';
-import { TrendingDown, Users, Database, Leaf, CheckCircle2 } from 'lucide-react';
+import { TrendingDown, Users, Database, Leaf } from 'lucide-react';
 
 const LIST_PROBLEM = [
     {
         icon: TrendingDown,
-        title: "Meningkatkan Efisiensi Distribusi Hasil Panen",
-        desc: "Menghilangkan rantai pasok panjang dengan sistem digital terpadu yang menghubungkan petani langsung ke konsumen, memastikan distribusi lebih cepat dan efisien.",
-        impact: "Waktu distribusi lebih singkat"
+        title: "Meningkatkan Efisiensi Distribusi Hasil Panen"
     },
     {
         icon: Users,
-        title: "Memberikan Harga Adil bagi Petani",
-        desc: "Marketplace transparan tanpa perantara yang merugikan, sehingga petani mendapat harga yang sesuai dengan kualitas produk dan kerja keras mereka.",
-        impact: "Pendapatan petani meningkat"
+        title: "Memberikan Harga Adil bagi Petani"
     },
     {
         icon: Database,
-        title: "Menjamin Ketersediaan Pangan Nasional",
-        desc: "Sistem manajemen data dan analitik real-time yang membantu pemerintah memantau produksi, stok, dan distribusi pangan untuk stabilitas nasional.",
-        impact: "Kedaulatan pangan terjaga"
+        title: "Menjamin Ketersediaan Pangan Nasional"
     },
     {
         icon: Leaf,
-        title: "Mendorong Transformasi Digital Pertanian",
-        desc: "Mengintegrasikan teknologi IoT, AI analytics, dan sistem pembiayaan digital untuk membawa pertanian Indonesia ke era modern yang berkelanjutan.",
-        impact: "Ekosistem pertanian modern"
+        title: "Mendorong Transformasi Digital Pertanian"
     }
 ];
 
@@ -63,17 +55,6 @@ const WhySection = () => {
                                     <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 leading-tight group-hover:text-green-700 transition-colors duration-300">
                                         {item.title}
                                     </h3>
-
-                                    <p className="text-base sm:text-lg text-gray-600 leading-relaxed mb-6">
-                                        {item.desc}
-                                    </p>
-
-                                    <div className="flex items-center gap-2 pt-4 border-t border-gray-100">
-                                        <CheckCircle2 size={20} className="text-green-500 flex-shrink-0" />
-                                        <span className="text-sm font-semibold text-green-700">
-                                            {item.impact}
-                                        </span>
-                                    </div>
                                 </div>
 
                                 <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 to-green-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
