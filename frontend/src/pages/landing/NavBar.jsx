@@ -96,7 +96,7 @@ const NavBar = () => {
                     />
                 </ul>
 
-                <div className="hidden lg:flex items-center space-x-3 xl:space-x-4">
+                <div className="hidden lg:flex items-center space-x-3 xl:space-x-4 relative z-[2]">
                     <a 
                         href="/signin" 
                         className="text-gray-700 hover:text-green-600 transition-colors duration-200 font-medium text-sm xl:text-base"
