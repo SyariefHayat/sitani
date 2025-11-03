@@ -147,7 +147,7 @@ const routes = [
         errorElement: <ErrorBoundary />,
     },
     { 
-        path: "/dashboard/farmer",
+        path: "/farmer/dashboard",
         element:
             <ProtectedRoute>
                 <Farmer />
