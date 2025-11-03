@@ -68,7 +68,7 @@ const LoginForm = () => {
                 toast.success("Login berhasil!")
 
                 setTimeout(() => {
-                navigate(`dashboard/${response.data.data.role}`)
+                    navigate(`/dashboard/${response.data.data.role}`)
                 }, 1000)
             }
         } catch (error) {
