@@ -8,10 +8,10 @@ const verifyLocation = async (req, res, next) => {
         if (!provinceCode && !cityCode && !subDistrictCode && !wardCode) return ERR(res, 400, "Data wilayah tidak lengkap");
 
         const regionLevels = [
-            { code: wardCode, level: "village" },
-            { code: subDistrictCode, level: "district" },
-            { code: cityCode, level: "regency" },
-            { code: provinceCode, level: "province" },
+            { code: wardCode, level: "desa" },
+            { code: subDistrictCode, level: "kecamatan" },
+            { code: cityCode, level: "kabupaten" },
+            { code: provinceCode, level: "provinsi" },
         ].filter(r => !!r.code);
 
         let allowed = null;
