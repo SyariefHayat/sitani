@@ -106,17 +106,17 @@ export const LIST_NAVBAR_ADMIN_DB = [
             },
             {
                 title: "Marketplace",
-                url: "/admin/marketplace",
+                url: "#",
                 icon: ShoppingCart,
             },
             {
                 title: "Benih & Produksi",
-                url: "/admin/benih-produksi",
+                url: "#",
                 icon: Sprout,
             },
             {
                 title: "Logistik & Distribusi",
-                url: "/admin/logistik",
+                url: "#",
                 icon: Truck,
             },
         ],
@@ -126,17 +126,17 @@ export const LIST_NAVBAR_ADMIN_DB = [
         items: [
             {
                 title: "Pembiayaan",
-                url: "/admin/pembiayaan",
+                url: "#",
                 icon: CreditCard,
             },
             {
                 title: "Pelatihan",
-                url: "/admin/pelatihan",
+                url: "#",
                 icon: GraduationCap,
             },
             {
                 title: "Analytics",
-                url: "/admin/analytics",
+                url: "#",
                 icon: BarChart3,
             },
         ],
