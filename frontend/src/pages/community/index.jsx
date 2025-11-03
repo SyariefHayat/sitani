@@ -64,14 +64,6 @@ const Community = () => {
             members: "2.500+ petani",
         },
         {
-            title: "📈 Data Analytics & Dashboard",
-            description: "Akses langganan premium data pertanian.",
-            content: "Subscriber premium mendapat akses dashboard produktivitas, analisis harga pasar, tren cuaca, dan layanan agronomis eksklusif.",
-            footer: "Upgrade Premium",
-            icon: "💎",
-            members: "5.000+ subscriber",
-        },
-        {
             title: "🤝 Kemitraan B2B & Ekspor",
             description: "Koneksi dengan industri pangan & eksportir.",
             content: "Jaringan kemitraan dengan hotel, industri pangan, dan eksportir untuk beras nutrisi dan organik bernilai tinggi ke pasar global.",

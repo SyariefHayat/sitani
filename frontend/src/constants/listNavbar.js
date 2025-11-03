@@ -44,27 +44,27 @@ export const LIST_NAVBAR = [
             }
         ]
     },
-    {
-        title: "Layanan",
-        subMenu: [
-            {
-                title: "Data Analytics Pertanian",
-                url: "#analytics"
-            },
-            {
-                title: "Pembiayaan & Asuransi",
-                url: "#pembiayaan"
-            },
-            {
-                title: "Logistik & Distribusi",
-                url: "#logistik"
-            },
-            {
-                title: "Pelatihan & Sertifikasi",
-                url: "#pelatihan"
-            }
-        ]
-    },
+    // {
+    //     title: "Layanan",
+    //     subMenu: [
+    //         {
+    //             title: "Data Analytics Pertanian",
+    //             url: "#analytics"
+    //         },
+    //         {
+    //             title: "Pembiayaan & Asuransi",
+    //             url: "#pembiayaan"
+    //         },
+    //         {
+    //             title: "Logistik & Distribusi",
+    //             url: "#logistik"
+    //         },
+    //         {
+    //             title: "Pelatihan & Sertifikasi",
+    //             url: "#pelatihan"
+    //         }
+    //     ]
+    // },
     {
         title: "Komunitas",
         url: "/community",
