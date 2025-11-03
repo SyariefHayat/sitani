@@ -159,7 +159,7 @@ export const LIST_NAVBAR_OPERATOR_DB = [
         items: [
             {
                 title: "Dashboard",
-                url: "/operator/dashboard",
+                url: "/admin/dashboard",
                 icon: Home,
             },
         ],
@@ -169,17 +169,17 @@ export const LIST_NAVBAR_OPERATOR_DB = [
         items: [
             {
                 title: "Petani",
-                url: "/operator/users/farmers",
+                url: "/admin/users/farmers",
                 icon: User,
             },
             {
                 title: "Benih & Produksi",
-                url: "/operator/benih-produksi",
+                url: "#",
                 icon: Sprout,
             },
             {
                 title: "Marketplace Lokal",
-                url: "/operator/marketplace",
+                url: "#",
                 icon: Store,
             },
         ],
