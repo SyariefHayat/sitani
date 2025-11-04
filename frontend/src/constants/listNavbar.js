@@ -73,6 +73,10 @@ export const LIST_NAVBAR = [
         title: "Berita",
         url: "/news"
     },
+    {
+        title: "Contact",
+        url: "/contact"
+    },
 ];
 
 export const LIST_NAVBAR_ADMIN_DB = [

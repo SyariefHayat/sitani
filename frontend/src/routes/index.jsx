@@ -33,6 +33,7 @@ import Location from "@/pages/dashboard/admin/Location"
 import Buyer from "@/pages/dashboard/Buyer"
 import Buyers from "@/pages/dashboard/admin/Buyers"
 import BuyersCreate from "@/pages/dashboard/admin/BuyersCreate"
+import Contact from "@/pages/landing/Contact"
 
 const routes = [
     { 
@@ -68,6 +69,11 @@ const routes = [
     { 
         path: "/news", 
         element: <News />,
+        errorElement: <ErrorBoundary />,
+    },
+    { 
+        path: "/contact", 
+        element: <Contact />,
         errorElement: <ErrorBoundary />,
     },
     { 
