@@ -19,7 +19,7 @@ const FeaturesSection = () => {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
                     {LIST_FEATURES.map((item, index) => {
                         const Icon = item.icon;
 
@@ -37,9 +37,18 @@ const FeaturesSection = () => {
                                         </div>
                                     </div>
 
-                                    <h3 className="text-xl font-bold mb-4 text-gray-900 group-hover:text-green-600 transition-colors duration-300">
+                                    {/* <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-green-600 transition-colors duration-300">
+                                        {item.title}
+                                    </h3> */}
+                                    <h3 className="text-lg sm:text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-3 leading-tight tracking-tight">
                                         {item.title}
                                     </h3>
+                                    <p className="text-zinc-600 dark:text-zinc-300/90 leading-relaxed text-sm sm:text-base">
+                                        {item.description}
+                                    </p>
+                                    {/* <p className="text-gray-600 text-base leading-relaxed">
+                                        {item.description}
+                                    </p> */}
                                 </div>
 
                                 <div className={`absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r ${item.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`}></div>

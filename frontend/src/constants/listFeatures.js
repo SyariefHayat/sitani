@@ -5,7 +5,7 @@ export const LIST_FEATURES = [
         id: 'komoditas',
         icon: ShoppingCart,
         title: "Marketplace Komoditas",
-        description: "Jual beli hasil panen padi, benih, dan beras langsung dari petani ke konsumen tanpa perantara yang merugikan.",
+        description: "Platform jual beli hasil panen langsung dari petani ke konsumen dengan harga adil tanpa perantara.",
         highlights: ["Transaksi Transparan", "Harga Fair", "Tanpa Perantara"],
         color: "from-blue-500 to-blue-600",
         navPath: "/marketplace/komoditas"
@@ -14,7 +14,7 @@ export const LIST_FEATURES = [
         id: 'benih',
         icon: Sprout,
         title: "Manajemen Benih & Produksi",
-        description: "Sistem pelacakan varietas benih unggul seperti Impari Zinc dan manajemen hasil panen berbasis lokasi dengan teknologi modern.",
+        description: "Sistem untuk melacak varietas benih unggul dan memantau hasil panen secara real-time berbasis lokasi.",
         highlights: ["Tracking Benih", "Monitoring Produksi", "Data Real-time"],
         color: "from-green-500 to-green-600",
         navPath: "/marketplace/benih"
@@ -23,7 +23,7 @@ export const LIST_FEATURES = [
         id: 'analytics',
         icon: BarChart3,
         title: "Data Analytics Pertanian",
-        description: "Dashboard produktivitas, analisis harga pasar, prediksi cuaca, dan tren pasar real-time untuk keputusan yang lebih baik.",
+        description: "Dashboard analitik yang menampilkan produktivitas, harga pasar, tren, dan prediksi cuaca secara interaktif.",
         highlights: ["Dashboard Interaktif", "Prediksi Cuaca", "Analisis Pasar"],
         color: "from-purple-500 to-purple-600",
         navPath: "/layanan/analytics"
@@ -32,7 +32,7 @@ export const LIST_FEATURES = [
         id: 'pembiayaan',
         icon: CreditCard,
         title: "Pembiayaan & Asuransi Digital",
-        description: "Terintegrasi dengan mitra seperti PNM, BRI Agro, dan fintech agrikultur untuk skema modal kerja petani yang mudah diakses.",
+        description: "Layanan modal kerja dan asuransi pertanian terintegrasi dengan lembaga keuangan dan fintech agrikultur.",
         highlights: ["Akses Modal Mudah", "Proses Cepat", "Bunga Kompetitif"],
         color: "from-orange-500 to-orange-600",
         navPath: "/layanan/pembiayaan"
@@ -41,7 +41,7 @@ export const LIST_FEATURES = [
         id: 'logistik',
         icon: Truck,
         title: "Logistik & Distribusi Digital",
-        description: "Sistem pengiriman dari gudang digital ke konsumen dengan tracking transparan dan manajemen rantai pasok yang efisien.",
+        description: "Sistem pengiriman dan manajemen rantai pasok yang efisien dengan pelacakan real-time.",
         highlights: ["Real-time Tracking", "Pengiriman Cepat", "Jangkauan Luas"],
         color: "from-red-500 to-red-600",
         navPath: "/layanan/logistik"
@@ -50,7 +50,7 @@ export const LIST_FEATURES = [
         id: 'pelatihan',
         icon: GraduationCap,
         title: "Pelatihan & Sertifikasi Petani",
-        description: "Modul e-learning agribisnis modern, sertifikasi GAP (Good Agricultural Practices), dan penerapan teknologi pertanian.",
+        description: "Program e-learning dan sertifikasi pertanian modern untuk meningkatkan kompetensi petani.",
         highlights: ["E-learning Gratis", "Sertifikasi GAP", "Pendampingan Ahli"],
         color: "from-teal-500 to-teal-600",
         navPath: "/layanan/pelatihan"
