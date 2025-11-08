@@ -249,6 +249,105 @@ const AboutUs = () => {
                     </div>
                 </section>
 
+                <section id="layanan" className="py-12 md:py-16 px-6 lg:px-20 bg-gray-50 transition-colors duration-500">
+                    <div className="container mx-auto max-w-6xl">
+                        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
+                            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                                Layanan Kami
+                            </h2>
+                            <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
+                                Solusi digital terintegrasi untuk mendukung seluruh siklus pertanian 
+                                dari hulu hingga hilir
+                            </p>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+                            {[
+                                {
+                                    icon: ShoppingBag,
+                                    id: 'komoditas',
+                                    title: "Marketplace Komoditas",
+                                    description: "Platform jual beli hasil panen langsung dari petani ke konsumen dengan harga adil tanpa perantara.",
+                                    highlights: ["Transaksi Transparan", "Harga Fair", "Tanpa Perantara"],
+                                    gradient: "from-blue-500 to-blue-600"
+                                },
+                                {
+                                    icon: Store,
+                                    id: 'benih',
+                                    title: "Manajemen Benih & Produksi",
+                                    description: "Sistem untuk melacak varietas benih unggul dan memantau hasil panen secara real-time berbasis lokasi.",
+                                    highlights: ["Tracking Benih", "Monitoring Produksi", "Data Real-time"],
+                                    gradient: "from-green-500 to-green-600"
+                                },
+                                {
+                                    icon: Cpu,
+                                    id: 'analytics',
+                                    title: "Data Analytics Pertanian",
+                                    description: "Dashboard analitik yang menampilkan produktivitas, harga pasar, tren, dan prediksi cuaca secara interaktif.",
+                                    highlights: ["Dashboard Interaktif", "Prediksi Cuaca", "Analisis Pasar"],
+                                    gradient: "from-purple-500 to-purple-600"
+                                },
+                                {
+                                    icon: Wallet,
+                                    id: 'pembiayaan',
+                                    title: "Pembiayaan & Asuransi Digital",
+                                    description: "Layanan modal kerja dan asuransi pertanian terintegrasi dengan lembaga keuangan dan fintech agrikultur.",
+                                    highlights: ["Akses Modal Mudah", "Proses Cepat", "Bunga Kompetitif"],
+                                    gradient: "from-orange-500 to-orange-600"
+                                },
+                                {
+                                    icon: Target,
+                                    id: 'logistik',
+                                    title: "Logistik & Distribusi Digital",
+                                    description: "Sistem pengiriman dan manajemen rantai pasok yang efisien dengan pelacakan real-time.",
+                                    highlights: ["Real-time Tracking", "Pengiriman Cepat", "Jangkauan Luas"],
+                                    gradient: "from-red-500 to-red-600"
+                                },
+                                {
+                                    icon: Users,
+                                    id: 'pelatihan',
+                                    title: "Pelatihan & Sertifikasi Petani",
+                                    description: "Program e-learning dan sertifikasi pertanian modern untuk meningkatkan kompetensi petani.",
+                                    highlights: ["E-learning Gratis", "Sertifikasi GAP", "Pendampingan Ahli"],
+                                    gradient: "from-teal-500 to-teal-600"
+                                }
+                            ].map((service, index) => {
+                                const Icon = service.icon;
+                                return (
+                                    <div 
+                                        key={index}
+                                        id={service.id}
+                                        className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group"
+                                    >
+                                        <div className={`w-16 h-16 bg-gradient-to-br ${service.gradient} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                                            <Icon size={32} className="text-white" strokeWidth={2} />
+                                        </div>
+                                        
+                                        <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
+                                            {service.title}
+                                        </h3>
+                                        
+                                        <p className="text-base text-gray-600 leading-relaxed mb-6">
+                                            {service.description}
+                                        </p>
+                                        
+                                        <div className="flex flex-wrap gap-2">
+                                            {service.highlights.map((highlight, idx) => (
+                                                <span 
+                                                    key={idx}
+                                                    className="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full"
+                                                >
+                                                    {highlight}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </section>
+
                 <section id="ekosistem" className="py-12 md:py-16 px-6 lg:px-20 bg-white transition-colors duration-500">
                     <div className="container mx-auto max-w-6xl">
                         <h3 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-16">

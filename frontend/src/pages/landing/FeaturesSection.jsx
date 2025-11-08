@@ -1,5 +1,6 @@
 import { LIST_FEATURES } from "@/constants/listFeatures";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const FeaturesSection = () => {
 
@@ -19,14 +20,15 @@ const FeaturesSection = () => {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                     {LIST_FEATURES.map((item, index) => {
                         const Icon = item.icon;
 
                         return (
-                            <div
+                            <Link
                                 key={index}
-                                className="group bg-white rounded-3xl p-8 shadow-lg transform transition-all duration-500 border border-gray-100 hover:border-green-200 hover:-translate-y-2 hover:shadow-2xl relative overflow-hidden"
+                                to={`/about-us#${item.id}`}
+                                className="group bg-white rounded-3xl p-8 shadow-lg transform transition-all duration-500 border border-gray-100 hover:border-green-200 hover:-translate-y-2 hover:shadow-2xl relative overflow-hidden cursor-pointer block"
                             >
                                 <div className={`absolute top-0 right-0 w-40 h-40 bg-gradient-to-br ${item.color} opacity-5 rounded-full -mr-20 -mt-20 transition-transform duration-700 group-hover:scale-150`}></div>
 
@@ -37,22 +39,24 @@ const FeaturesSection = () => {
                                         </div>
                                     </div>
 
-                                    {/* <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-green-600 transition-colors duration-300">
-                                        {item.title}
-                                    </h3> */}
-                                    <h3 className="text-lg sm:text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-3 leading-tight tracking-tight">
+                                    <h3 className="text-lg sm:text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-3 leading-tight tracking-tight group-hover:text-green-600 transition-colors duration-300">
                                         {item.title}
                                     </h3>
                                     <p className="text-zinc-600 dark:text-zinc-300/90 leading-relaxed text-sm sm:text-base">
                                         {item.description}
                                     </p>
-                                    {/* <p className="text-gray-600 text-base leading-relaxed">
-                                        {item.description}
-                                    </p> */}
+                                    
+                                    {/* Hints indicator */}
+                                    <div className="mt-4 flex items-center gap-2 text-green-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <span>Pelajari lebih lanjut</span>
+                                        <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </div>
                                 </div>
 
                                 <div className={`absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r ${item.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`}></div>
-                            </div>
+                            </Link>
                         );
                     })}
                 </div>
