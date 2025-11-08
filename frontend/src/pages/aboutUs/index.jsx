@@ -354,7 +354,7 @@ const AboutUs = () => {
                             Ekosistem Terintegrasi
                         </h3>
                         
-                        <div className="flex flex-col md:flex-row items-center justify-between gap-6 max-w-5xl mx-auto">
+                        <div className="flex flex-col md:flex-row items-center justify-center flex-wrap gap-6 max-w-5xl mx-auto px-4 overflow-hidden">
                             {[
                                 'Petani',
                                 'Pembenih',
@@ -363,30 +363,48 @@ const AboutUs = () => {
                                 'Konsumen'
                             ].map((item, index, array) => (
                                 <React.Fragment key={index}>
-                                    <div className="flex flex-col items-center gap-4">
-                                        <div className="w-20 h-20 md:w-24 md:h-24 bg-green-600 rounded-full flex items-center justify-center shadow-lg">
-                                            <span className="text-white font-bold text-xl md:text-2xl">
-                                                {index + 1}
-                                            </span>
-                                        </div>
-                                        <span className="text-base md:text-lg font-semibold text-gray-900 text-center">
-                                            {item}
-                                        </span>
+                                <div className="flex flex-col items-center gap-4 flex-shrink-0">
+                                    <div className="w-20 h-20 md:w-24 md:h-24 bg-green-600 rounded-full flex items-center justify-center shadow-lg">
+                                    <span className="text-white font-bold text-xl md:text-2xl">
+                                        {index + 1}
+                                    </span>
                                     </div>
-                                    {index < array.length - 1 && (
-                                        <div className="hidden md:block text-green-600">
-                                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                                                <path d="M5 12h14M12 5l7 7-7 7"/>
-                                            </svg>
-                                        </div>
-                                    )}
-                                    {index < array.length - 1 && (
-                                        <div className="md:hidden text-green-600 rotate-90">
-                                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                                                <path d="M5 12h14M12 5l7 7-7 7"/>
-                                            </svg>
-                                        </div>
-                                    )}
+                                    <span className="text-base md:text-lg font-semibold text-gray-900 text-center">
+                                    {item}
+                                    </span>
+                                </div>
+
+                                {/* Panah horizontal untuk md+ */}
+                                {index < array.length - 1 && (
+                                    <div className="hidden md:flex items-center text-green-600">
+                                    <svg
+                                        width="32"
+                                        height="32"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2.5"
+                                    >
+                                        <path d="M5 12h14M12 5l7 7-7 7" />
+                                    </svg>
+                                    </div>
+                                )}
+
+                                {/* Panah vertikal untuk mobile */}
+                                {index < array.length - 1 && (
+                                    <div className="flex md:hidden text-green-600 rotate-90">
+                                    <svg
+                                        width="32"
+                                        height="32"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2.5"
+                                    >
+                                        <path d="M5 12h14M12 5l7 7-7 7" />
+                                    </svg>
+                                    </div>
+                                )}
                                 </React.Fragment>
                             ))}
                         </div>

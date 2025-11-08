@@ -32,15 +32,15 @@ export const LIST_NAVBAR = [
         subMenu: [
             {
                 title: "Komoditas Padi & Beras",
-                url: "/marketplace/komoditas"
+                url: "/mart"
             },
-            {
-                title: "Benih & Produksi",
-                url: "#benih"
-            },
+            // {
+            //     title: "Benih & Produksi",
+            //     url: "#benih"
+            // },
             {
                 title: "Harga Pasar",
-                url: "/marketplace/harga-pasar"
+                url: "/price-market"
             }
         ]
     },
