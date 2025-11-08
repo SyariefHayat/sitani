@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { 
     Eye, 
@@ -15,6 +16,35 @@ import Footer from '../landing/Footer';
 import DefaultLayout from '@/components/layouts/DefaultLayout';
 
 const AboutUs = () => {
+    const location = useLocation();
+
+    useEffect(() => {
+        // Scroll to section based on hash in URL
+        if (location.hash) {
+            const id = location.hash.replace('#', '');
+            const element = document.getElementById(id);
+            
+            if (element) {
+                // Wait for page to fully render, then scroll
+                setTimeout(() => {
+                    const yOffset = -80; // Offset for fixed header
+                    const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    
+                    window.scrollTo({
+                        top: y,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Add highlight effect
+                    element.classList.add('highlight-section');
+                    setTimeout(() => {
+                        element.classList.remove('highlight-section');
+                    }, 2000);
+                }, 100);
+            }
+        }
+    }, [location]);
+
     const getColorClasses = (color) => {
         const colors = {
             green: 'bg-green-100 text-green-600',
@@ -69,6 +99,19 @@ const AboutUs = () => {
 
     return (
         <DefaultLayout>
+            <style>
+                {`
+                    .highlight-section {
+                        animation: highlight 2s ease-in-out;
+                    }
+                    
+                    @keyframes highlight {
+                        0%, 100% { background-color: transparent; }
+                        50% { background-color: rgba(34, 197, 94, 0.1); }
+                    }
+                `}
+            </style>
+            
             <NavBar />
 
             <div className="bg-white">
@@ -86,7 +129,7 @@ const AboutUs = () => {
                     </div>
                 </section>
 
-                <section className="py-12 md:py-16 px-6 lg:px-20 bg-white">
+                <section id="tentang-sitani" className="py-12 md:py-16 px-6 lg:px-20 bg-white transition-colors duration-500">
                     <div className="container mx-auto max-w-6xl">
                         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                             {/* Image */}
@@ -114,7 +157,7 @@ const AboutUs = () => {
                     </div>
                 </section>
 
-                <section className="py-12 md:py-16 px-6 lg:px-20 bg-gray-50">
+                <section id="visi-misi" className="py-12 md:py-16 px-6 lg:px-20 bg-gray-50 transition-colors duration-500">
                     <div className="container mx-auto max-w-6xl">
                         <div className="grid md:grid-cols-2 gap-12 md:gap-16">
                             
@@ -163,7 +206,7 @@ const AboutUs = () => {
                     </div>
                 </section>
 
-                <section className="py-12 md:py-16 px-6 lg:px-20 bg-white">
+                <section id="kemitraan" className="py-12 md:py-16 px-6 lg:px-20 bg-white transition-colors duration-500">
                     <div className="max-w-6xl mx-auto">
                         <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
                             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -206,7 +249,7 @@ const AboutUs = () => {
                     </div>
                 </section>
 
-                <section className="py-12 md:py-16 px-6 lg:px-20 bg-white">
+                <section id="ekosistem" className="py-12 md:py-16 px-6 lg:px-20 bg-white transition-colors duration-500">
                     <div className="container mx-auto max-w-6xl">
                         <h3 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-16">
                             Ekosistem Terintegrasi
