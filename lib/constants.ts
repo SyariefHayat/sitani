@@ -1,4 +1,4 @@
-import { Briefcase, FileText, History, LayoutDashboard, LucideIcon, TrendingUp } from "lucide-react";
+import { Briefcase, CalendarClock, FileText, History, LayoutDashboard, LucideIcon, Package, ShoppingCart, TrendingUp, Warehouse } from "lucide-react";
 
 export const MENU_ITEMS = [
     { label: "Marketplace", href: "/marketplace" },
@@ -26,6 +26,13 @@ export const STATS_INVESTASI = [
     { icon: "/peserta-pelatihan.png", alt: "icon solusi hasil tani", value: "Rp 750.000", label: "solusi hasil tani" },
 ]
 
+export const STATS_DISTRIBUTOR = [
+    { icon: "/petani-aktif.png", alt: "icon stok nasional", value: "970 Ton", label: "Total Stok Nasional" },
+    { icon: "/total-transaksi.png", alt: "icon pesanan", value: "76 Pesanan", label: "Bulk Order Pesanan" },
+    { icon: "/proyek.png", alt: "icon pengiriman", value: "23 Pengiriman", label: "Pengiriman Aktif" },
+    { icon: "/investor.png", alt: "icon permintaan", value: "52 Pengiriman", label: "Permintaan Pasar" },
+]
+
 export const FEATURES = [
     { icon: "/marketplace-hasil-tani.png", alt: "icon marketplace hasil tani", title: "Marketplace Hasil Tani", desc: "Platform jual beli hasil panen langsung dari petani ke pembeli." },
     { icon: "/investasi-pertanian.png", alt: "icon investasi pertanian", title: "Investasi Pertanian", desc: "Fasilitas pendanaan proyek pertanian dengan sistem bagi hasil." },
@@ -40,4 +47,11 @@ export const INVESTASI_MENU: { label: string; href: string; icon: LucideIcon }[]
     { label: "Portofolio", href: "/investasi/portofolio", icon: Briefcase },
     { label: "Riwayat", href: "/investasi/riwayat", icon: History },
     { label: "Laporan", href: "/investasi/laporan", icon: FileText },
+]
+
+export const DISTRIBUTOR_MENU: { label: string; href: string; icon: LucideIcon }[] = [
+    { label: "Dashboard", href: "/distributor", icon: LayoutDashboard },
+    { label: "Bulk Order", href: "/distributor/bulk-order", icon: ShoppingCart },
+    { label: "Gudang", href: "/distributor/gudang", icon: Warehouse },
+    { label: "Jadwal Distribusi", href: "/distributor/jadwal-distribusi", icon: CalendarClock },
 ]
