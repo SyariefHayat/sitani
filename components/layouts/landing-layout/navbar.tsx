@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+
 import {
     Sheet,
     SheetContent,
@@ -10,12 +11,13 @@ import {
     SheetClose,
     SheetFooter,
 } from "@/components/ui/sheet"
-import { MENU_ITEMS } from "@/lib/constants"
-import { Menu } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
 
-const Navbar = () => {
+import Link from "next/link"
+import Image from "next/image"
+import { Menu } from "lucide-react"
+import { MENU_ITEMS } from "@/lib/constants"
+
+const Navbar = ({ children }: { children?: React.ReactNode }) => {
     return (
         <nav className="w-full flex items-center justify-between text-white px-6 sm:px-10 lg:px-16 py-3 bg-[#206536]">
             {/* Logo */}
@@ -24,36 +26,8 @@ const Navbar = () => {
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">SiTani</h1>
             </Link>
 
-            {/* Desktop Navigation - visible on lg and above */}
-            <ul className="hidden lg:flex items-center gap-6 xl:gap-8">
-                {MENU_ITEMS.map((item) => (
-                    <li key={item.href}>
-                        <Link
-                            href={item.href}
-                            className="text-white/90 hover:text-white font-medium transition-colors duration-200 hover:underline underline-offset-4"
-                        >
-                            {item.label}
-                        </Link>
-                    </li>
-                ))}
-                <li>
-                    <Link href="/login">
-                        <Button
-                            variant="ghost"
-                            className="text-white hover:text-white hover:bg-white/15 font-medium cursor-pointer"
-                        >
-                            Masuk
-                        </Button>
-                    </Link>
-                </li>
-                <li>
-                    <Link href="/register">
-                        <Button className="bg-yellow-500 hover:bg-yellow-400 text-black font-semibold cursor-pointer">
-                            Daftar
-                        </Button>
-                    </Link>
-                </li>
-            </ul>
+            {/* Slot konten kanan — di-supply oleh halaman */}
+            {children}
 
             {/* Mobile & Tablet - Sheet Drawer */}
             <div className="lg:hidden">
