@@ -40,6 +40,13 @@ export const STATS_LOGISTIK = [
     { icon: "/investor.png", alt: "icon on-time delivery", value: "96,5%", label: "On-Time Delivery" },
 ]
 
+export const STATS_ACADEMY = [
+    { icon: "/petani-aktif.png", alt: "icon kelas diikuti", value: "12 Kelas", label: "Kelas Diikuti" },
+    { icon: "/total-transaksi.png", alt: "icon jam belajar", value: "48 Jam", label: "Jam Belajar" },
+    { icon: "/proyek.png", alt: "icon sertifikat", value: "5", label: "Sertifikat Diperoleh" },
+    { icon: "/investor.png", alt: "icon progress", value: "78%", label: "Progress Rata-rata" },
+]
+
 export const FEATURES = [
     { icon: "/marketplace-hasil-tani.png", alt: "icon marketplace hasil tani", title: "Marketplace Hasil Tani", desc: "Platform jual beli hasil panen langsung dari petani ke pembeli." },
     { icon: "/investasi-pertanian.png", alt: "icon investasi pertanian", title: "Investasi Pertanian", desc: "Fasilitas pendanaan proyek pertanian dengan sistem bagi hasil." },
