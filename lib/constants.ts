@@ -1,4 +1,4 @@
-import { Briefcase, CalendarClock, FileText, History, LayoutDashboard, LucideIcon, Package, ShoppingCart, Truck, TrendingUp, Warehouse } from "lucide-react";
+import { BookOpen, Bookmark, Briefcase, CalendarClock, FileText, History, LayoutDashboard, LucideIcon, Package, ShoppingCart, Truck, TrendingUp, Warehouse } from "lucide-react";
 
 export const MENU_ITEMS = [
     { label: "Marketplace", href: "/marketplace" },
@@ -83,4 +83,19 @@ export const ACADEMY_MENU: { label: string; href: string; icon: LucideIcon }[] =
     { label: "Webinar", href: "/academy/webinar", icon: TrendingUp },
     { label: "Sertifikat", href: "/academy/sertifikat", icon: FileText },
     { label: "Pusat Bantuan", href: "/academy/pusat-bantuan", icon: History },
+]
+
+export const ARTICLE_MENU: { label: string; href: string; icon: LucideIcon }[] = [
+    { label: "Semua Artikel", href: "/article", icon: BookOpen },
+    { label: "Kategori", href: "/article/kategori", icon: LayoutDashboard },
+    { label: "Trending", href: "/article/trending", icon: TrendingUp },
+    { label: "Bookmark", href: "/article/bookmark", icon: Bookmark },
+    { label: "Tulis Artikel", href: "/article/tulis", icon: FileText },
+]
+
+export const STATS_ARTICLE = [
+    { icon: "/petani-aktif.png", alt: "icon total artikel", value: "1.580", label: "Total Artikel" },
+    { icon: "/total-transaksi.png", alt: "icon penulis", value: "245", label: "Penulis Aktif" },
+    { icon: "/proyek.png", alt: "icon pembaca", value: "89K+", label: "Total Pembaca" },
+    { icon: "/investor.png", alt: "icon kategori", value: "18", label: "Kategori" },
 ]
