@@ -55,6 +55,64 @@ export const FEATURES = [
     { icon: "/academy.png", alt: "icon academy", title: "SiTani Academy", desc: "Pelatihan dan edukasi untuk meningkatkan keterampilan petani." },
 ]
 
+export const SUPPLY_CHAIN = [
+    { icon: "/petani.png", alt: "icon ekosistem petani", label: "Petani" },
+    { icon: "/distributor.png", alt: "icon ekosistem distributor", label: "Distributor" },
+    { icon: "/logistik.png", alt: "icon ekosistem logistik", label: "Logistik" },
+    { icon: "/pembeli.png", alt: "icon ekosistem pembeli", label: "Pembeli" },
+]
+
+export const INVESTMENT_FLOW = [
+    { icon: "/eco-investor.png", alt: "icon ekosistem investor", label: "Investor" },
+    { icon: "/modal.png", alt: "icon ekosistem modal", label: "Modal" },
+    { icon: "/keuntungan.png", alt: "icon ekosistem keuntungan", label: "Keuntungan" },
+]
+
+export const COURSES = [
+    {
+        image: "/hero-section-bg.png",
+        title: "Budidaya Padi Modern",
+        rating: 4.8,
+        reviews: 128,
+        kategori: "Online Course",
+    },
+    {
+        image: "/hero-section-bg.png",
+        title: "Manajemen Keuangan Petani",
+        rating: 4.6,
+        reviews: 95,
+        kategori: "Urban Course",
+    },
+    {
+        image: "/hero-section-bg.png",
+        title: "Smart Farming & IoT",
+        rating: 4.9,
+        reviews: 213,
+        kategori: "Tech Course",
+    },
+    {
+        image: "/hero-section-bg.png",
+        title: "Pengendalian Hama Terpadu",
+        rating: 4.7,
+        reviews: 167,
+        kategori: "Online Course",
+    },
+    {
+        image: "/hero-section-bg.png",
+        title: "Agribisnis & Pemasaran",
+        rating: 4.5,
+        reviews: 89,
+        kategori: "Bisnis Course",
+    },
+    {
+        image: "/hero-section-bg.png",
+        title: "Pertanian Organik Lanjutan",
+        rating: 4.8,
+        reviews: 201,
+        kategori: "Premium Course",
+    },
+]
+
 export const INVESTASI_MENU: { label: string; href: string; icon: LucideIcon }[] = [
     { label: "Overview", href: "/investasi", icon: LayoutDashboard },
     { label: "Investasi", href: "/investasi/investasi", icon: TrendingUp },

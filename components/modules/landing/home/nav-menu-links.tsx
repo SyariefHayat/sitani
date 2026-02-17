@@ -1,8 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { MENU_ITEMS } from "@/lib/constants"
+import { Button } from "@/components/ui/button"
 
 const NavMenuLinks = () => {
     return (
@@ -20,12 +20,7 @@ const NavMenuLinks = () => {
 
             <li>
                 <Link href="/login">
-                    <Button
-                        variant="ghost"
-                        className="text-white hover:text-white hover:bg-white/15 font-medium cursor-pointer"
-                    >
-                        Masuk
-                    </Button>
+                    Masuk
                 </Link>
             </li>
 

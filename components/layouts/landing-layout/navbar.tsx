@@ -20,16 +20,13 @@ import { MENU_ITEMS } from "@/lib/constants"
 const Navbar = ({ children }: { children?: React.ReactNode }) => {
     return (
         <nav className="w-full flex items-center justify-between text-white px-6 sm:px-10 lg:px-16 py-3 bg-[#206536]">
-            {/* Logo */}
             <Link href="/" className="flex items-center gap-3">
                 <Image src="/logo.png" alt="Logo SiTani" width={40} height={40} />
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">SiTani</h1>
             </Link>
 
-            {/* Slot konten kanan — di-supply oleh halaman */}
             {children}
 
-            {/* Mobile & Tablet - Sheet Drawer */}
             <div className="lg:hidden">
                 <Sheet>
                     <SheetTrigger asChild>
@@ -58,7 +55,6 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
                             </SheetTitle>
                         </SheetHeader>
 
-                        {/* Menu Links */}
                         <div className="flex flex-col px-4 py-4 gap-1">
                             {MENU_ITEMS.map((item) => (
                                 <SheetClose asChild key={item.href}>
@@ -72,7 +68,6 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
                             ))}
                         </div>
 
-                        {/* Auth Buttons */}
                         <SheetFooter className="border-t border-white/10 p-4">
                             <div className="flex flex-col gap-2.5">
                                 <SheetClose asChild>

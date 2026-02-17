@@ -1,5 +1,5 @@
-import { STATS } from "@/lib/constants"
 import Image from "next/image"
+import { STATS } from "@/lib/constants"
 
 const StatisticSection = () => {
     return (

@@ -7,7 +7,7 @@ const LandingLayout = ({
     children: React.ReactNode
 }>) => {
     return (
-        <main className="w-full min-h-screen font-inter bg-gray-50">
+        <main className="w-full min-h-screen font-inter bg-gray-100">
             {children}
             <Footer />
         </main>
