@@ -10,10 +10,11 @@ import {
     type CarouselApi,
 } from "@/components/ui/carousel"
 
+import Link from "next/link"
 import Image from "next/image"
 import { COURSES } from "@/lib/constants"
 import { Button } from "@/components/ui/button"
-import { BookOpen, Heart, Star } from "lucide-react"
+import { ArrowRight, BookOpen, Star } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { useState, useCallback, useEffect } from "react"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
@@ -95,9 +96,11 @@ const AcademySection = () => {
                                 <Separator />
 
                                 <CardFooter className="px-4 py-3 flex items-center justify-between">
-                                    <Button variant="outline" size="sm" className="text-xs font-medium text-gray-500 hover:text-red-500 cursor-pointer">
-                                        <Heart />
-                                        Lihat Selengkapnya
+                                    <Button asChild variant="outline" size="sm" className="text-xs font-medium text-[#2d7a3a] border-[#2d7a3a]/30 hover:bg-[#2d7a3a]/5 hover:text-[#1a4528] cursor-pointer">
+                                        <Link href={`/academy/course/${course.slug}`}>
+                                            <ArrowRight className="w-3.5 h-3.5" />
+                                            Lihat Selengkapnya
+                                        </Link>
                                     </Button>
                                     <Button
                                         size="sm"
