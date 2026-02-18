@@ -1,8 +1,7 @@
 import Navbar from "@/components/layouts/landing-layout/navbar"
 import NavMenuLinks from "@/components/modules/landing/home/nav-menu-links"
 import HeroSection from "@/components/modules/landing/marketplace/hero-section"
-import CategorySection from "@/components/modules/landing/marketplace/category-section"
-import ProductSection from "@/components/modules/landing/marketplace/product-section"
+import MarketplaceContent from "@/components/modules/landing/marketplace/marketplace-content"
 
 const Marketplace = () => {
     return (
@@ -11,8 +10,7 @@ const Marketplace = () => {
                 <NavMenuLinks />
             </Navbar>
             <HeroSection />
-            <CategorySection />
-            <ProductSection />
+            <MarketplaceContent />
         </>
     )
 }
