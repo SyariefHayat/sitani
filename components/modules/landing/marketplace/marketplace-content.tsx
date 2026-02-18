@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { Star, MapPin, ShoppingCart, ChevronLeft, ChevronRight, Wheat, Carrot, Apple, Leaf, FlowerIcon, Droplets, TreesIcon, Bean, Sparkles, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -29,34 +30,34 @@ const CATEGORY_COUNTS: Record<string, string> = {
 
 const ALL_PRODUCTS = [
     // Beras & Padi
-    { image: "/hero-section-bg.png", title: "Beras Organik Premium Cianjur", price: "Rp 18.000", unit: "/kg", rating: 4.9, reviews: 234, seller: "Tani Makmur", location: "Cianjur, Jawa Barat", category: "Beras & Padi", isNew: false, isFeatured: true },
-    { image: "/hero-section-bg.png", title: "Beras Merah Organik", price: "Rp 22.000", unit: "/kg", rating: 4.7, reviews: 89, seller: "Sawah Sehat", location: "Subang, Jawa Barat", category: "Beras & Padi", isNew: true, isFeatured: false },
-    { image: "/hero-section-bg.png", title: "Beras Ketan Putih", price: "Rp 16.000", unit: "/kg", rating: 4.5, reviews: 67, seller: "Padi Makmur", location: "Karawang, Jawa Barat", category: "Beras & Padi", isNew: false, isFeatured: false },
+    { slug: "beras-organik-premium-cianjur", image: "/hero-section-bg.png", title: "Beras Organik Premium Cianjur", price: "Rp 18.000", unit: "/kg", rating: 4.9, reviews: 234, seller: "Tani Makmur", location: "Cianjur, Jawa Barat", category: "Beras & Padi", isNew: false, isFeatured: true },
+    { slug: "beras-merah-organik", image: "/hero-section-bg.png", title: "Beras Merah Organik", price: "Rp 22.000", unit: "/kg", rating: 4.7, reviews: 89, seller: "Sawah Sehat", location: "Subang, Jawa Barat", category: "Beras & Padi", isNew: true, isFeatured: false },
+    { slug: "beras-ketan-putih", image: "/hero-section-bg.png", title: "Beras Ketan Putih", price: "Rp 16.000", unit: "/kg", rating: 4.5, reviews: 67, seller: "Padi Makmur", location: "Karawang, Jawa Barat", category: "Beras & Padi", isNew: false, isFeatured: false },
     // Sayuran
-    { image: "/hero-section-bg.png", title: "Cabai Merah Keriting Segar", price: "Rp 45.000", unit: "/kg", rating: 4.7, reviews: 189, seller: "Kebun Segar", location: "Brebes, Jawa Tengah", category: "Sayuran", isNew: false, isFeatured: true },
-    { image: "/hero-section-bg.png", title: "Tomat Cherry Hidroponik", price: "Rp 35.000", unit: "/kg", rating: 4.9, reviews: 98, seller: "Green Farm", location: "Bandung, Jawa Barat", category: "Sayuran", isNew: true, isFeatured: true },
-    { image: "/hero-section-bg.png", title: "Brokoli Segar Organik", price: "Rp 28.000", unit: "/kg", rating: 4.6, reviews: 45, seller: "Kebun Hijau", location: "Lembang, Jawa Barat", category: "Sayuran", isNew: true, isFeatured: false },
-    { image: "/hero-section-bg.png", title: "Bayam Hidroponik Premium", price: "Rp 8.000", unit: "/ikat", rating: 4.8, reviews: 120, seller: "Hydro Farm", location: "Bogor, Jawa Barat", category: "Sayuran", isNew: false, isFeatured: false },
+    { slug: "cabai-merah-keriting-segar", image: "/hero-section-bg.png", title: "Cabai Merah Keriting Segar", price: "Rp 45.000", unit: "/kg", rating: 4.7, reviews: 189, seller: "Kebun Segar", location: "Brebes, Jawa Tengah", category: "Sayuran", isNew: false, isFeatured: true },
+    { slug: "tomat-cherry-hidroponik", image: "/hero-section-bg.png", title: "Tomat Cherry Hidroponik", price: "Rp 35.000", unit: "/kg", rating: 4.9, reviews: 98, seller: "Green Farm", location: "Bandung, Jawa Barat", category: "Sayuran", isNew: true, isFeatured: true },
+    { slug: "brokoli-segar-organik", image: "/hero-section-bg.png", title: "Brokoli Segar Organik", price: "Rp 28.000", unit: "/kg", rating: 4.6, reviews: 45, seller: "Kebun Hijau", location: "Lembang, Jawa Barat", category: "Sayuran", isNew: true, isFeatured: false },
+    { slug: "bayam-hidroponik-premium", image: "/hero-section-bg.png", title: "Bayam Hidroponik Premium", price: "Rp 8.000", unit: "/ikat", rating: 4.8, reviews: 120, seller: "Hydro Farm", location: "Bogor, Jawa Barat", category: "Sayuran", isNew: false, isFeatured: false },
     // Buah-buahan
-    { image: "/hero-section-bg.png", title: "Mangga Harum Manis Grade A", price: "Rp 25.000", unit: "/kg", rating: 4.8, reviews: 312, seller: "Buah Nusantara", location: "Indramayu, Jawa Barat", category: "Buah-buahan", isNew: false, isFeatured: true },
-    { image: "/hero-section-bg.png", title: "Jeruk Mandarin Manis", price: "Rp 30.000", unit: "/kg", rating: 4.7, reviews: 156, seller: "Kebun Jeruk", location: "Batu, Jawa Timur", category: "Buah-buahan", isNew: true, isFeatured: false },
-    { image: "/hero-section-bg.png", title: "Pisang Cavendish Segar", price: "Rp 15.000", unit: "/sisir", rating: 4.5, reviews: 78, seller: "Tani Pisang", location: "Lumajang, Jawa Timur", category: "Buah-buahan", isNew: false, isFeatured: false },
+    { slug: "mangga-harum-manis-grade-a", image: "/hero-section-bg.png", title: "Mangga Harum Manis Grade A", price: "Rp 25.000", unit: "/kg", rating: 4.8, reviews: 312, seller: "Buah Nusantara", location: "Indramayu, Jawa Barat", category: "Buah-buahan", isNew: false, isFeatured: true },
+    { slug: "jeruk-mandarin-manis", image: "/hero-section-bg.png", title: "Jeruk Mandarin Manis", price: "Rp 30.000", unit: "/kg", rating: 4.7, reviews: 156, seller: "Kebun Jeruk", location: "Batu, Jawa Timur", category: "Buah-buahan", isNew: true, isFeatured: false },
+    { slug: "pisang-cavendish-segar", image: "/hero-section-bg.png", title: "Pisang Cavendish Segar", price: "Rp 15.000", unit: "/sisir", rating: 4.5, reviews: 78, seller: "Tani Pisang", location: "Lumajang, Jawa Timur", category: "Buah-buahan", isNew: false, isFeatured: false },
     // Rempah-rempah
-    { image: "/hero-section-bg.png", title: "Kunyit Segar Pilihan", price: "Rp 20.000", unit: "/kg", rating: 4.6, reviews: 92, seller: "Rempah Nusantara", location: "Solo, Jawa Tengah", category: "Rempah-rempah", isNew: false, isFeatured: true },
-    { image: "/hero-section-bg.png", title: "Jahe Merah Organik", price: "Rp 35.000", unit: "/kg", rating: 4.8, reviews: 134, seller: "Herbal Farm", location: "Boyolali, Jawa Tengah", category: "Rempah-rempah", isNew: true, isFeatured: false },
+    { slug: "kunyit-segar-pilihan", image: "/hero-section-bg.png", title: "Kunyit Segar Pilihan", price: "Rp 20.000", unit: "/kg", rating: 4.6, reviews: 92, seller: "Rempah Nusantara", location: "Solo, Jawa Tengah", category: "Rempah-rempah", isNew: false, isFeatured: true },
+    { slug: "jahe-merah-organik", image: "/hero-section-bg.png", title: "Jahe Merah Organik", price: "Rp 35.000", unit: "/kg", rating: 4.8, reviews: 134, seller: "Herbal Farm", location: "Boyolali, Jawa Tengah", category: "Rempah-rempah", isNew: true, isFeatured: false },
     // Perkebunan
-    { image: "/hero-section-bg.png", title: "Kopi Arabika Toraja Premium", price: "Rp 120.000", unit: "/kg", rating: 4.9, reviews: 445, seller: "Kopi Nusantara", location: "Toraja, Sulawesi Selatan", category: "Perkebunan", isNew: false, isFeatured: true },
-    { image: "/hero-section-bg.png", title: "Teh Hijau Organik Puncak", price: "Rp 65.000", unit: "/kg", rating: 4.7, reviews: 201, seller: "Kebun Teh", location: "Puncak, Jawa Barat", category: "Perkebunan", isNew: true, isFeatured: true },
+    { slug: "kopi-arabika-toraja-premium", image: "/hero-section-bg.png", title: "Kopi Arabika Toraja Premium", price: "Rp 120.000", unit: "/kg", rating: 4.9, reviews: 445, seller: "Kopi Nusantara", location: "Toraja, Sulawesi Selatan", category: "Perkebunan", isNew: false, isFeatured: true },
+    { slug: "teh-hijau-organik-puncak", image: "/hero-section-bg.png", title: "Teh Hijau Organik Puncak", price: "Rp 65.000", unit: "/kg", rating: 4.7, reviews: 201, seller: "Kebun Teh", location: "Puncak, Jawa Barat", category: "Perkebunan", isNew: true, isFeatured: true },
     // Kacang-kacangan
-    { image: "/hero-section-bg.png", title: "Kacang Tanah Premium", price: "Rp 28.000", unit: "/kg", rating: 4.5, reviews: 67, seller: "Tani Kacang", location: "Tuban, Jawa Timur", category: "Kacang-kacangan", isNew: false, isFeatured: false },
-    { image: "/hero-section-bg.png", title: "Kedelai Lokal Organik", price: "Rp 18.000", unit: "/kg", rating: 4.6, reviews: 89, seller: "Tani Jaya", location: "Jember, Jawa Timur", category: "Kacang-kacangan", isNew: true, isFeatured: false },
+    { slug: "kacang-tanah-premium", image: "/hero-section-bg.png", title: "Kacang Tanah Premium", price: "Rp 28.000", unit: "/kg", rating: 4.5, reviews: 67, seller: "Tani Kacang", location: "Tuban, Jawa Timur", category: "Kacang-kacangan", isNew: false, isFeatured: false },
+    { slug: "kedelai-lokal-organik", image: "/hero-section-bg.png", title: "Kedelai Lokal Organik", price: "Rp 18.000", unit: "/kg", rating: 4.6, reviews: 89, seller: "Tani Jaya", location: "Jember, Jawa Timur", category: "Kacang-kacangan", isNew: true, isFeatured: false },
     // Hasil Olahan
-    { image: "/hero-section-bg.png", title: "Madu Hutan Asli Sumbawa", price: "Rp 85.000", unit: "/botol", rating: 4.9, reviews: 310, seller: "Madu Asli", location: "Sumbawa, NTB", category: "Hasil Olahan", isNew: false, isFeatured: true },
-    { image: "/hero-section-bg.png", title: "Gula Aren Organik", price: "Rp 45.000", unit: "/kg", rating: 4.8, reviews: 176, seller: "Aren Jaya", location: "Lebak, Banten", category: "Hasil Olahan", isNew: true, isFeatured: false },
+    { slug: "madu-hutan-asli-sumbawa", image: "/hero-section-bg.png", title: "Madu Hutan Asli Sumbawa", price: "Rp 85.000", unit: "/botol", rating: 4.9, reviews: 310, seller: "Madu Asli", location: "Sumbawa, NTB", category: "Hasil Olahan", isNew: false, isFeatured: true },
+    { slug: "gula-aren-organik", image: "/hero-section-bg.png", title: "Gula Aren Organik", price: "Rp 45.000", unit: "/kg", rating: 4.8, reviews: 176, seller: "Aren Jaya", location: "Lebak, Banten", category: "Hasil Olahan", isNew: true, isFeatured: false },
     // Tanaman Hias
-    { image: "/hero-section-bg.png", title: "Monstera Deliciosa", price: "Rp 150.000", unit: "/pot", rating: 4.8, reviews: 256, seller: "Green Decor", location: "Depok, Jawa Barat", category: "Tanaman Hias", isNew: true, isFeatured: true },
+    { slug: "monstera-deliciosa", image: "/hero-section-bg.png", title: "Monstera Deliciosa", price: "Rp 150.000", unit: "/pot", rating: 4.8, reviews: 256, seller: "Green Decor", location: "Depok, Jawa Barat", category: "Tanaman Hias", isNew: true, isFeatured: true },
     // Additional
-    { image: "/hero-section-bg.png", title: "Jagung Manis Pipilan Segar", price: "Rp 12.000", unit: "/kg", rating: 4.6, reviews: 156, seller: "Tani Jaya", location: "Malang, Jawa Timur", category: "Sayuran", isNew: false, isFeatured: false },
+    { slug: "jagung-manis-pipilan-segar", image: "/hero-section-bg.png", title: "Jagung Manis Pipilan Segar", price: "Rp 12.000", unit: "/kg", rating: 4.6, reviews: 156, seller: "Tani Jaya", location: "Malang, Jawa Timur", category: "Sayuran", isNew: false, isFeatured: false },
 ]
 
 const FILTER_LABELS = ["Semua", ...CATEGORIES.map(c => c.title)]
@@ -99,9 +100,11 @@ const ProductCard = ({ product }: ProductCardProps) => (
                 oleh <span className="font-medium text-gray-600">{product.seller}</span>
             </p>
             <div className="grid grid-cols-2 gap-2 pt-1">
-                <Button size="sm" variant="outline" className="border-[#206536]/30 text-[#206536] hover:bg-[#206536]/5 text-xs font-semibold cursor-pointer">
-                    Detail
-                </Button>
+                <Link href={`/marketplace/product/${product.slug}`}>
+                    <Button size="sm" variant="outline" className="w-full border-[#206536]/30 text-[#206536] hover:bg-[#206536]/5 text-xs font-semibold cursor-pointer">
+                        Detail
+                    </Button>
+                </Link>
                 <Button size="sm" className="bg-[#206536] hover:bg-[#1a5530] text-white text-xs font-semibold cursor-pointer gap-1.5">
                     <ShoppingCart className="w-3.5 h-3.5" />
                     Beli
@@ -171,8 +174,8 @@ const ProductList = ({ title, icon, products, activeFilter, onFilterChange }: Pr
                         key={label}
                         onClick={() => onFilterChange(label)}
                         className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer ${activeFilter === label
-                                ? "bg-[#609A26] text-white shadow-sm"
-                                : "text-gray-400 hover:text-gray-600 hover:bg-gray-100"
+                            ? "bg-[#609A26] text-white shadow-sm"
+                            : "text-gray-400 hover:text-gray-600 hover:bg-gray-100"
                             }`}
                     >
                         {label}
@@ -228,8 +231,8 @@ const MarketplaceContent = () => {
                                 key={cat.title}
                                 onClick={() => handleCategoryClick(cat.title)}
                                 className={`group w-full flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl border shadow-[0_2px_12px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-[0_8px_24px_rgba(26,69,40,0.12)] hover:-translate-y-1 cursor-pointer ${isActive
-                                        ? "bg-[#609A26]/5 border-[#609A26]/40 ring-1 ring-[#609A26]/20"
-                                        : "bg-white border-gray-100"
+                                    ? "bg-[#609A26]/5 border-[#609A26]/40 ring-1 ring-[#609A26]/20"
+                                    : "bg-white border-gray-100"
                                     }`}
                             >
                                 <div className={`p-2.5 sm:p-3 rounded-xl ${cat.color} shrink-0 transition-transform duration-300 group-hover:scale-110`}>
