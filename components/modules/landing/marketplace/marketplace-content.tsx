@@ -5,6 +5,9 @@ import Image from "next/image"
 import Link from "next/link"
 import { Star, MapPin, ShoppingCart, ChevronLeft, ChevronRight, Wheat, Carrot, Apple, Leaf, FlowerIcon, Droplets, TreesIcon, Bean, Sparkles, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useDispatch } from "react-redux"
+import { addToCart } from "@/lib/redux/cart-slice"
+import { toast } from "sonner"
 
 const CATEGORIES = [
     { icon: Wheat, title: "Beras & Padi", color: "text-amber-600 bg-amber-50", activeColor: "text-amber-700 border-amber-500" },
@@ -66,53 +69,80 @@ interface ProductCardProps {
     product: typeof ALL_PRODUCTS[0]
 }
 
-const ProductCard = ({ product }: ProductCardProps) => (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.06)] overflow-hidden transition-all duration-300 hover:shadow-[0_4px_20px_rgba(26,69,40,0.12)] hover:-translate-y-0.5">
-        <div className="relative w-full h-40 sm:h-44 lg:h-48 bg-gray-100">
-            <Image src={product.image} alt={product.title} fill className="object-cover" />
-            {product.isNew && (
-                <span className="absolute top-2 left-2 bg-[#609A26] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Baru</span>
-            )}
-            {product.isFeatured && (
-                <span className="absolute top-2 right-2 bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
-                    <Sparkles className="w-3 h-3" /> Unggulan
-                </span>
-            )}
-        </div>
-        <div className="p-4 sm:p-5 flex flex-col gap-3">
-            <h3 className="text-sm sm:text-base font-bold text-[#1a4528] leading-snug line-clamp-2">{product.title}</h3>
-            <div className="flex items-baseline gap-1">
-                <span className="text-lg sm:text-xl font-extrabold text-[#609A26]">{product.price}</span>
-                <span className="text-xs text-gray-400">{product.unit}</span>
-            </div>
-            <div className="flex items-center justify-between text-xs text-gray-500">
-                <div className="flex items-center gap-1">
-                    <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                    <span className="font-semibold text-[#1a4528]">{product.rating}</span>
-                    <span>({product.reviews})</span>
+const ProductCard = ({ product }: ProductCardProps) => {
+    const dispatch = useDispatch()
+
+    const handleAddToCart = () => {
+        dispatch(addToCart({
+            slug: product.slug,
+            title: product.title,
+            image: product.image,
+            price: product.price,
+            unit: product.unit,
+            qty: 1,
+            seller: product.seller,
+        }))
+        toast.success(`${product.title} ditambahkan ke keranjang`, {
+            description: `1x ${product.price}${product.unit}`,
+        })
+    }
+
+    return (
+        <div className="bg-white rounded-xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.06)] overflow-hidden transition-all duration-300 hover:shadow-[0_4px_20px_rgba(26,69,40,0.12)] hover:-translate-y-0.5">
+            <Link href={`/marketplace/product/${product.slug}`}>
+                <div className="relative w-full h-40 sm:h-44 lg:h-48 bg-gray-100 cursor-pointer">
+                    <Image src={product.image} alt={product.title} fill className="object-cover" />
+                    {product.isNew && (
+                        <span className="absolute top-2 left-2 bg-[#609A26] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Baru</span>
+                    )}
+                    {product.isFeatured && (
+                        <span className="absolute top-2 right-2 bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                            <Sparkles className="w-3 h-3" /> Unggulan
+                        </span>
+                    )}
                 </div>
-                <div className="flex items-center gap-1">
-                    <MapPin className="w-3 h-3" />
-                    <span className="truncate max-w-[120px]">{product.location}</span>
-                </div>
-            </div>
-            <p className="text-xs text-gray-400">
-                oleh <span className="font-medium text-gray-600">{product.seller}</span>
-            </p>
-            <div className="grid grid-cols-2 gap-2 pt-1">
+            </Link>
+            <div className="p-4 sm:p-5 flex flex-col gap-3">
                 <Link href={`/marketplace/product/${product.slug}`}>
-                    <Button size="sm" variant="outline" className="w-full border-[#206536]/30 text-[#206536] hover:bg-[#206536]/5 text-xs font-semibold cursor-pointer">
-                        Detail
-                    </Button>
+                    <h3 className="text-sm sm:text-base font-bold text-[#1a4528] leading-snug line-clamp-2 hover:text-[#609A26] transition-colors cursor-pointer">{product.title}</h3>
                 </Link>
-                <Button size="sm" className="bg-[#206536] hover:bg-[#1a5530] text-white text-xs font-semibold cursor-pointer gap-1.5">
-                    <ShoppingCart className="w-3.5 h-3.5" />
-                    Beli
-                </Button>
+                <div className="flex items-baseline gap-1">
+                    <span className="text-lg sm:text-xl font-extrabold text-[#609A26]">{product.price}</span>
+                    <span className="text-xs text-gray-400">{product.unit}</span>
+                </div>
+                <div className="flex items-center justify-between text-xs text-gray-500">
+                    <div className="flex items-center gap-1">
+                        <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                        <span className="font-semibold text-[#1a4528]">{product.rating}</span>
+                        <span>({product.reviews})</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                        <MapPin className="w-3 h-3" />
+                        <span className="truncate max-w-[120px]">{product.location}</span>
+                    </div>
+                </div>
+                <p className="text-xs text-gray-400">
+                    oleh <span className="font-medium text-gray-600">{product.seller}</span>
+                </p>
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                    <Link href={`/marketplace/product/${product.slug}`}>
+                        <Button size="sm" variant="outline" className="w-full border-[#206536]/30 text-[#206536] hover:bg-[#206536]/5 text-xs font-semibold cursor-pointer">
+                            Detail
+                        </Button>
+                    </Link>
+                    <Button
+                        size="sm"
+                        className="bg-[#206536] hover:bg-[#1a5530] text-white text-xs font-semibold cursor-pointer gap-1.5"
+                        onClick={handleAddToCart}
+                    >
+                        <ShoppingCart className="w-3.5 h-3.5" />
+                        Beli
+                    </Button>
+                </div>
             </div>
         </div>
-    </div>
-)
+    )
+}
 
 interface ProductListProps {
     title: string

@@ -2,11 +2,16 @@
 
 import { useState } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { Star, MapPin, ShoppingCart, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useDispatch } from "react-redux"
+import { addToCart } from "@/lib/redux/cart-slice"
+import { toast } from "sonner"
 
 const PRODUCTS = [
     {
+        slug: "beras-organik-premium-cianjur",
         image: "/hero-section-bg.png",
         title: "Beras Organik Premium Cianjur",
         price: "Rp 18.000",
@@ -17,6 +22,7 @@ const PRODUCTS = [
         location: "Cianjur, Jawa Barat",
     },
     {
+        slug: "cabai-merah-keriting-segar",
         image: "/hero-section-bg.png",
         title: "Cabai Merah Keriting Segar",
         price: "Rp 45.000",
@@ -27,6 +33,7 @@ const PRODUCTS = [
         location: "Brebes, Jawa Tengah",
     },
     {
+        slug: "mangga-harum-manis-grade-a",
         image: "/hero-section-bg.png",
         title: "Mangga Harum Manis Grade A",
         price: "Rp 25.000",
@@ -37,6 +44,7 @@ const PRODUCTS = [
         location: "Indramayu, Jawa Barat",
     },
     {
+        slug: "jagung-manis-pipilan-segar",
         image: "/hero-section-bg.png",
         title: "Jagung Manis Pipilan Segar",
         price: "Rp 12.000",
@@ -47,6 +55,7 @@ const PRODUCTS = [
         location: "Malang, Jawa Timur",
     },
     {
+        slug: "tomat-cherry-hidroponik",
         image: "/hero-section-bg.png",
         title: "Tomat Cherry Hidroponik",
         price: "Rp 35.000",
@@ -57,6 +66,7 @@ const PRODUCTS = [
         location: "Bandung, Jawa Barat",
     },
     {
+        slug: "kopi-arabika-toraja-premium",
         image: "/hero-section-bg.png",
         title: "Kopi Arabika Toraja Premium",
         price: "Rp 120.000",
@@ -70,6 +80,7 @@ const PRODUCTS = [
 
 const ProductSection = () => {
     const [startIndex, setStartIndex] = useState(0)
+    const dispatch = useDispatch()
     const visibleCount = 3
     const maxIndex = Math.max(0, PRODUCTS.length - visibleCount)
 
@@ -79,6 +90,21 @@ const ProductSection = () => {
 
     const handleNext = () => {
         setStartIndex((prev) => Math.min(maxIndex, prev + 1))
+    }
+
+    const handleAddToCart = (product: typeof PRODUCTS[0]) => {
+        dispatch(addToCart({
+            slug: product.slug,
+            title: product.title,
+            image: product.image,
+            price: product.price,
+            unit: product.unit,
+            qty: 1,
+            seller: product.seller,
+        }))
+        toast.success(`${product.title} ditambahkan ke keranjang`, {
+            description: `1x ${product.price}${product.unit}`,
+        })
     }
 
     const visibleProducts = PRODUCTS.slice(startIndex, startIndex + visibleCount)
@@ -116,25 +142,29 @@ const ProductSection = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
                 {visibleProducts.map((product, index) => (
                     <div
-                        key={`${product.title}-${startIndex}-${index}`}
+                        key={`${product.slug}-${startIndex}-${index}`}
                         className="bg-white rounded-xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.06)] overflow-hidden transition-all duration-300 hover:shadow-[0_4px_20px_rgba(26,69,40,0.12)] hover:-translate-y-0.5"
                     >
                         {/* Product Image */}
-                        <div className="relative w-full h-40 sm:h-44 lg:h-48 bg-gray-100">
-                            <Image
-                                src={product.image}
-                                alt={product.title}
-                                fill
-                                className="object-cover"
-                            />
-                        </div>
+                        <Link href={`/marketplace/product/${product.slug}`}>
+                            <div className="relative w-full h-40 sm:h-44 lg:h-48 bg-gray-100 cursor-pointer">
+                                <Image
+                                    src={product.image}
+                                    alt={product.title}
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                        </Link>
 
                         {/* Card Content */}
                         <div className="p-4 sm:p-5 flex flex-col gap-3">
                             {/* Title */}
-                            <h3 className="text-sm sm:text-base font-bold text-[#1a4528] leading-snug line-clamp-2">
-                                {product.title}
-                            </h3>
+                            <Link href={`/marketplace/product/${product.slug}`}>
+                                <h3 className="text-sm sm:text-base font-bold text-[#1a4528] leading-snug line-clamp-2 hover:text-[#609A26] transition-colors cursor-pointer">
+                                    {product.title}
+                                </h3>
+                            </Link>
 
                             {/* Price */}
                             <div className="flex items-baseline gap-1">
@@ -162,16 +192,19 @@ const ProductSection = () => {
 
                             {/* Action Buttons */}
                             <div className="grid grid-cols-2 gap-2 pt-1">
-                                <Button
-                                    size="sm"
-                                    variant="outline"
-                                    className="border-[#206536]/30 text-[#206536] hover:bg-[#206536]/5 text-xs font-semibold cursor-pointer"
-                                >
-                                    Detail
-                                </Button>
+                                <Link href={`/marketplace/product/${product.slug}`}>
+                                    <Button
+                                        size="sm"
+                                        variant="outline"
+                                        className="w-full border-[#206536]/30 text-[#206536] hover:bg-[#206536]/5 text-xs font-semibold cursor-pointer"
+                                    >
+                                        Detail
+                                    </Button>
+                                </Link>
                                 <Button
                                     size="sm"
                                     className="bg-[#206536] hover:bg-[#1a5530] text-white text-xs font-semibold cursor-pointer gap-1.5"
+                                    onClick={() => handleAddToCart(product)}
                                 >
                                     <ShoppingCart className="w-3.5 h-3.5" />
                                     Beli
