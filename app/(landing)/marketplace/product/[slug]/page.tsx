@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import { MARKETPLACE_PRODUCTS } from "@/lib/constants"
 import Navbar from "@/components/layouts/landing-layout/navbar"
-import NavMenuLinks from "@/components/modules/landing/home/nav-menu-links"
+import NavUserProfile from "@/components/modules/landing/marketplace/nav-user-profile"
 import ProductDetail from "@/components/modules/landing/marketplace/product-detail"
 
 interface ProductPageProps {
@@ -21,7 +21,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
     return (
         <>
             <Navbar>
-                <NavMenuLinks />
+                <NavUserProfile />
             </Navbar>
             <ProductDetail product={product} otherProducts={otherProducts} />
         </>

@@ -1,5 +1,7 @@
 import React from 'react'
 import Footer from '@/components/modules/landing/home/footer'
+import ReduxProvider from '@/lib/redux/redux-provider'
+import { Toaster } from 'sonner'
 
 const LandingLayout = ({
     children,
@@ -7,10 +9,13 @@ const LandingLayout = ({
     children: React.ReactNode
 }>) => {
     return (
-        <main className="w-full min-h-screen font-inter bg-gray-100">
-            {children}
-            <Footer />
-        </main>
+        <ReduxProvider>
+            <main className="w-full min-h-screen font-inter bg-gray-100">
+                {children}
+                <Footer />
+            </main>
+            <Toaster position="top-right" richColors />
+        </ReduxProvider>
     )
 }
 

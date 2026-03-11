@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import { Star, MapPin, ShoppingCart, Heart, Share2, Link2, Copy, CheckCircle2, Truck, ShieldCheck, Package, Minus, Plus, Sparkles, Store, MessageCircle, ChevronRight, Weight, Layers, Box } from "lucide-react"
@@ -9,6 +11,8 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { addToCart } from "@/lib/redux/cart-slice"
+import { toast } from "sonner"
 
 export interface Product {
     slug: string
@@ -39,6 +43,8 @@ interface ProductDetailProps {
 }
 
 const ProductDetail = ({ product, otherProducts }: ProductDetailProps) => {
+    const dispatch = useDispatch()
+    const router = useRouter()
     const [isFavorited, setIsFavorited] = useState(false)
     const [copied, setCopied] = useState(false)
     const [qty, setQty] = useState(product.minOrder)
@@ -240,6 +246,20 @@ const ProductDetail = ({ product, otherProducts }: ProductDetailProps) => {
                                         size="lg"
                                         variant="outline"
                                         className="flex-1 border-[#609A26] text-[#609A26] hover:bg-[#609A26]/5 font-bold text-sm rounded-xl py-6 cursor-pointer gap-2"
+                                        onClick={() => {
+                                            dispatch(addToCart({
+                                                slug: product.slug,
+                                                title: product.title,
+                                                image: product.image,
+                                                price: product.price,
+                                                unit: product.unit,
+                                                qty,
+                                                seller: product.seller,
+                                            }))
+                                            toast.success(`"${product.title}" ditambahkan ke keranjang`, {
+                                                description: `${qty} item`,
+                                            })
+                                        }}
                                     >
                                         <ShoppingCart className="w-5 h-5" />
                                         Keranjang
@@ -247,6 +267,18 @@ const ProductDetail = ({ product, otherProducts }: ProductDetailProps) => {
                                     <Button
                                         size="lg"
                                         className="flex-1 bg-[#609A26] hover:bg-[#528520] text-white font-bold text-sm rounded-xl py-6 cursor-pointer gap-2 shadow-md hover:shadow-lg transition-all"
+                                        onClick={() => {
+                                            dispatch(addToCart({
+                                                slug: product.slug,
+                                                title: product.title,
+                                                image: product.image,
+                                                price: product.price,
+                                                unit: product.unit,
+                                                qty,
+                                                seller: product.seller,
+                                            }))
+                                            router.push("/marketplace/cart")
+                                        }}
                                     >
                                         Beli Sekarang
                                     </Button>
