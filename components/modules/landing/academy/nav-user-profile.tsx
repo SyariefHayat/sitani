@@ -1,6 +1,6 @@
 "use client"
 
-import { Bell, ChevronDown } from "lucide-react"
+import { Bell, ChevronDown, LogOut, User, BookOpen, Award, Settings } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -12,10 +12,23 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 const NavUserProfile = () => {
+    const router = useRouter()
+
+    const handleLogout = () => {
+        toast.success("Berhasil keluar dari akun", {
+            description: "Anda telah keluar. Mengarahkan ke halaman utama...",
+        })
+        setTimeout(() => {
+            router.push("/")
+        }, 1500)
+    }
+
     return (
-        <div className="flex items-center gap-2 sm:gap-4">
+        <div className="flex items-center gap-2 sm:gap-4 ml-auto">
             {/* Notifikasi */}
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -76,17 +89,53 @@ const NavUserProfile = () => {
                         <ChevronDown className="w-4 h-4 text-white/70" />
                     </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-52">
-                    <DropdownMenuLabel>Akun Saya</DropdownMenuLabel>
+                <DropdownMenuContent align="end" className="w-56 rounded-xl shadow-xl border border-gray-200">
+                    {/* User Info */}
+                    <DropdownMenuLabel className="py-3">
+                        <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-full bg-[#206536] flex items-center justify-center">
+                                <User className="w-4.5 h-4.5 text-white" />
+                            </div>
+                            <div>
+                                <p className="text-sm font-semibold text-gray-800">Siti</p>
+                                <p className="text-xs text-gray-500 font-normal">siti@sitani.id</p>
+                            </div>
+                        </div>
+                    </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild className="cursor-pointer">
-                        <Link href="/academy/profil">Profil</Link>
+
+                    <DropdownMenuItem asChild className="cursor-pointer gap-2.5 py-2.5">
+                        <Link href="/academy/profil">
+                            <User className="w-4 h-4" />
+                            Profil Saya
+                        </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem asChild className="cursor-pointer">
-                        <Link href="/academy/pengaturan">Pengaturan</Link>
+                    <DropdownMenuItem asChild className="cursor-pointer gap-2.5 py-2.5">
+                        <Link href="/academy/kelas-saya">
+                            <BookOpen className="w-4 h-4" />
+                            Kelas Saya
+                        </Link>
                     </DropdownMenuItem>
+                    <DropdownMenuItem asChild className="cursor-pointer gap-2.5 py-2.5">
+                        <Link href="/academy/sertifikat">
+                            <Award className="w-4 h-4" />
+                            Sertifikat
+                        </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild className="cursor-pointer gap-2.5 py-2.5">
+                        <Link href="/academy/pengaturan">
+                            <Settings className="w-4 h-4" />
+                            Pengaturan
+                        </Link>
+                    </DropdownMenuItem>
+
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-600">
+
+                    <DropdownMenuItem
+                        className="cursor-pointer gap-2.5 py-2.5 text-red-600 focus:text-red-600 focus:bg-red-50"
+                        onClick={handleLogout}
+                    >
+                        <LogOut className="w-4 h-4" />
                         Keluar
                     </DropdownMenuItem>
                 </DropdownMenuContent>
