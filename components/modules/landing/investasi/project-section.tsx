@@ -2,12 +2,23 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight, TrendingUp, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Progress } from "@/components/ui/progress"
+import { Separator } from "@/components/ui/separator"
+import { toast } from "sonner"
 
-const PROJECTS = [
+interface Project {
+    image: string
+    title: string
+    creator: { name: string; avatar: string; initials: string }
+    funded: string
+    target: string
+    progress: number
+}
+
+const PROJECTS: Project[] = [
     {
         image: "/hero-section-bg.png",
         title: "Padi Organik Premium - Subang",
@@ -60,6 +71,8 @@ const PROJECTS = [
 
 const ProjectSection = () => {
     const [startIndex, setStartIndex] = useState(0)
+    const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+    const [investAmount, setInvestAmount] = useState("")
     const visibleCount = 3
     const maxIndex = Math.max(0, PROJECTS.length - visibleCount)
 
@@ -71,9 +84,22 @@ const ProjectSection = () => {
         setStartIndex((prev) => Math.min(maxIndex, prev + 1))
     }
 
+    const handleInvest = () => {
+        if (!investAmount || parseInt(investAmount) <= 0) {
+            toast.error("Masukkan jumlah investasi yang valid")
+            return
+        }
+        toast.success(`Investasi Rp ${parseInt(investAmount).toLocaleString("id-ID")} berhasil diproses!`, {
+            description: `Proyek: ${selectedProject?.title}`,
+        })
+        setInvestAmount("")
+        setSelectedProject(null)
+    }
+
     const visibleProjects = PROJECTS.slice(startIndex, startIndex + visibleCount)
 
     return (
+        <>
         <section className="w-full px-6 sm:px-10 lg:px-16 pb-8 sm:pb-10 lg:pb-14">
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
@@ -160,12 +186,14 @@ const ProjectSection = () => {
                                     size="sm"
                                     variant="outline"
                                     className="border-[#206536]/30 text-[#206536] hover:bg-[#206536]/5 text-xs font-semibold cursor-pointer"
+                                    onClick={() => setSelectedProject(project)}
                                 >
                                     Detail
                                 </Button>
                                 <Button
                                     size="sm"
                                     className="bg-[#206536] hover:bg-[#1a5530] text-white text-xs font-semibold cursor-pointer"
+                                    onClick={() => { setSelectedProject(project); setInvestAmount("") }}
                                 >
                                     Investasi
                                 </Button>
@@ -175,6 +203,75 @@ const ProjectSection = () => {
                 ))}
             </div>
         </section>
+
+        {/* Project Detail / Invest Modal */}
+        {selectedProject && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center">
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setSelectedProject(null)} />
+                <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
+                    <div className="sticky top-0 bg-white rounded-t-2xl z-10 flex items-center justify-between px-6 py-4 border-b border-gray-100">
+                        <h2 className="text-lg font-bold text-gray-900">Detail Proyek</h2>
+                        <button onClick={() => setSelectedProject(null)} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 cursor-pointer"><X className="w-5 h-5" /></button>
+                    </div>
+                    <div className="px-6 py-5 space-y-5">
+                        <div className="relative w-full h-44 rounded-xl overflow-hidden bg-gray-100">
+                            <Image src={selectedProject.image} alt={selectedProject.title} fill className="object-cover" />
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-bold text-gray-900 mt-0.5">{selectedProject.title}</h3>
+                            <div className="flex items-center gap-2 mt-2">
+                                <Avatar className="w-6 h-6">
+                                    <AvatarImage src={selectedProject.creator.avatar} />
+                                    <AvatarFallback className="text-[10px] bg-[#206536]/10 text-[#206536] font-semibold">
+                                        {selectedProject.creator.initials}
+                                    </AvatarFallback>
+                                </Avatar>
+                                <span className="text-sm text-gray-500">{selectedProject.creator.name}</span>
+                            </div>
+                        </div>
+
+                        {/* Progress */}
+                        <div>
+                            <div className="flex justify-between text-xs mb-1.5">
+                                <span className="text-gray-400">{selectedProject.funded} / {selectedProject.target}</span>
+                                <span className="font-bold text-[#206536]">{selectedProject.progress}%</span>
+                            </div>
+                            <div className="w-full h-2.5 bg-gray-100 rounded-full overflow-hidden">
+                                <div className="h-full bg-gradient-to-r from-[#206536] to-[#609A26] rounded-full transition-all" style={{ width: `${selectedProject.progress}%` }} />
+                            </div>
+                        </div>
+
+                        <Separator />
+
+                        {/* Invest Input */}
+                        <div>
+                            <label className="text-sm font-medium text-gray-700 mb-1.5 block">Jumlah Investasi (Rp)</label>
+                            <input
+                                type="number"
+                                value={investAmount}
+                                onChange={(e) => setInvestAmount(e.target.value)}
+                                placeholder="Contoh: 1000000"
+                                className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#609A26]/30 focus:border-[#609A26]"
+                            />
+                            <div className="flex gap-2 mt-2">
+                                {["500000", "1000000", "2000000", "5000000"].map((v) => (
+                                    <button key={v} onClick={() => setInvestAmount(v)} className="px-2.5 py-1 text-[11px] font-medium border border-gray-200 rounded-lg hover:border-[#609A26] hover:text-[#609A26] cursor-pointer transition-colors">
+                                        {parseInt(v) >= 1000000 ? `${parseInt(v)/1000000}jt` : `${parseInt(v)/1000}rb`}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex justify-end gap-2 px-6 py-4 border-t border-gray-100 bg-gray-50/50 rounded-b-2xl">
+                        <Button variant="outline" onClick={() => setSelectedProject(null)} className="cursor-pointer text-sm">Tutup</Button>
+                        <Button onClick={handleInvest} className="bg-[#206536] hover:bg-[#1a5530] text-white cursor-pointer gap-1.5 text-sm">
+                            <TrendingUp className="w-4 h-4" /> Investasi Sekarang
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        )}
+        </>
     )
 }
 

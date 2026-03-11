@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 const HeroSection = () => {
     return (
@@ -8,7 +9,9 @@ const HeroSection = () => {
             </h2>
             <p className="text-sm sm:text-base lg:text-lg text-[#206536] font-bold">Jual panen, distribusi, investasi &amp; pelatihan dalam satu platform</p>
             <div className="w-full sm:w-2/3 lg:w-1/3 grid grid-cols-2 gap-2 sm:gap-3">
-                <Button className="bg-[#609A26] hover:bg-[#528520] text-white font-semibold rounded-lg py-4 sm:py-5 text-xs sm:text-sm shadow-sm cursor-pointer">Lihat Proyek</Button>
+                <Link href="/investasi/investasi">
+                    <Button className="w-full bg-[#609A26] hover:bg-[#528520] text-white font-semibold rounded-lg py-4 sm:py-5 text-xs sm:text-sm shadow-sm cursor-pointer">Lihat Proyek</Button>
+                </Link>
             </div>
         </section>
     )
