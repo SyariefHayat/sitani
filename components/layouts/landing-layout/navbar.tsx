@@ -14,21 +14,43 @@ import {
 
 import Link from "next/link"
 import Image from "next/image"
-import { Menu } from "lucide-react"
+import { LogIn, Menu, UserPlus } from "lucide-react"
 import { MENU_ITEMS } from "@/lib/constants"
 import NavCartDropdown from "@/components/modules/landing/marketplace/nav-cart-dropdown"
 
 const Navbar = ({ children, showCart }: { children?: React.ReactNode; showCart?: boolean }) => {
     return (
         <nav className="w-full flex items-center justify-between text-white px-6 sm:px-10 lg:px-16 py-3 bg-[#206536]">
-            <Link href="/" className="flex items-center gap-3">
+            <Link href="/" className="flex items-center gap-3 shrink-0">
                 <Image src="/logo.png" alt="Logo SiTani" width={40} height={40} />
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">SiTani</h1>
             </Link>
 
-            {children}
+            {/* Children (NavUserProfile / NavMenuLinks) — pushed to the right */}
+            <div className="flex items-center gap-2 sm:gap-3 ml-auto">
+                {children}
 
-            <div className="flex items-center gap-2">
+                {/* Masuk & Daftar buttons — shown when no children */}
+                {!children && (
+                    <div className="hidden lg:flex items-center gap-3">
+                        <Link href="/login">
+                            <Button
+                                variant="ghost"
+                                className="text-white hover:bg-white/15 font-medium cursor-pointer gap-2"
+                            >
+                                <LogIn className="w-4 h-4" />
+                                Masuk
+                            </Button>
+                        </Link>
+                        <Link href="/register">
+                            <Button className="bg-yellow-500 hover:bg-yellow-400 text-black font-semibold cursor-pointer gap-2">
+                                <UserPlus className="w-4 h-4" />
+                                Daftar Sekarang
+                            </Button>
+                        </Link>
+                    </div>
+                )}
+
                 {/* Cart Dropdown — only on marketplace pages */}
                 {showCart && <NavCartDropdown />}
 
@@ -80,15 +102,17 @@ const Navbar = ({ children, showCart }: { children?: React.ReactNode; showCart?:
                                         <Link href="/login">
                                             <Button
                                                 variant="outline"
-                                                className="w-full border-white/30 text-white bg-transparent hover:bg-white/10 hover:text-white font-medium py-5 cursor-pointer"
+                                                className="w-full border-white/30 text-white bg-transparent hover:bg-white/10 hover:text-white font-medium py-5 cursor-pointer gap-2"
                                             >
+                                                <LogIn className="w-4 h-4" />
                                                 Masuk
                                             </Button>
                                         </Link>
                                     </SheetClose>
                                     <SheetClose asChild>
                                         <Link href="/register">
-                                            <Button className="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-semibold py-5 cursor-pointer">
+                                            <Button className="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-semibold py-5 cursor-pointer gap-2">
+                                                <UserPlus className="w-4 h-4" />
                                                 Daftar Sekarang
                                             </Button>
                                         </Link>
