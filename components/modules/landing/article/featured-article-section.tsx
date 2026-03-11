@@ -6,6 +6,8 @@ import {
     CardContent,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import { toast } from "sonner"
 
 const artikelData = [
     {
@@ -107,6 +109,22 @@ const FeaturedArticleSection = () => {
     const trending = artikelData.filter((a) => a.trending).slice(1)
     const latest = artikelData.filter((a) => !a.trending)
 
+    const handleBookmark = (e: React.MouseEvent, judul: string) => {
+        e.preventDefault()
+        e.stopPropagation()
+        toast.success("Artikel disimpan ke bookmark", {
+            description: `"${judul}" telah ditambahkan ke koleksi Anda`,
+        })
+    }
+
+    const handleLike = (e: React.MouseEvent, judul: string) => {
+        e.preventDefault()
+        e.stopPropagation()
+        toast.success("Artikel disukai!", {
+            description: `Anda menyukai "${judul}"`,
+        })
+    }
+
     return (
         <section className="w-full px-6 sm:px-10 lg:px-16 py-8 sm:py-12">
             {/* Section Header */}
@@ -120,55 +138,57 @@ const FeaturedArticleSection = () => {
                         <p className="text-sm text-muted-foreground">Artikel terpopuler dan terbaru untuk Anda</p>
                     </div>
                 </div>
-                <Button variant="outline" size="sm" className="cursor-pointer font-medium text-[#609A26] border-[#609A26]/30 hover:bg-[#609A26]/5">
-                    Lihat Semua
+                <Button asChild variant="outline" size="sm" className="cursor-pointer font-medium text-[#609A26] border-[#609A26]/30 hover:bg-[#609A26]/5">
+                    <Link href="/article/trending">Lihat Semua</Link>
                 </Button>
             </div>
 
             {/* Featured + Trending Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-8">
                 {/* Main Featured Article */}
-                <Card className="lg:col-span-3 overflow-hidden group cursor-pointer hover:shadow-lg transition-all">
-                    <div className="h-56 sm:h-64 bg-linear-to-br from-[#609A26]/15 to-[#206536]/15 flex items-center justify-center relative">
-                        <span className="text-7xl">{featured.thumbnail}</span>
-                        {featured.trending && (
-                            <div className="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
-                                <TrendingUp className="h-3 w-3" /> TRENDING
-                            </div>
-                        )}
-                        <span className={`absolute top-3 right-3 px-2.5 py-1 text-[11px] font-medium rounded-full ${kategoriConfig[featured.kategori] || "bg-gray-100 text-gray-700"}`}>
-                            {featured.kategori}
-                        </span>
-                    </div>
-                    <CardContent className="p-5 space-y-3">
-                        <h3 className="text-lg font-bold text-foreground leading-snug group-hover:text-[#609A26] transition-colors">
-                            {featured.judul}
-                        </h3>
-                        <p className="text-sm text-muted-foreground line-clamp-2">
-                            {featured.ringkasan}
-                        </p>
-                        <div className="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t border-border/40">
-                            <div className="flex items-center gap-3">
-                                <span className="font-medium text-foreground">{featured.penulis}</span>
-                                <span>{featured.tanggal}</span>
-                                <div className="flex items-center gap-1">
-                                    <Clock className="h-3 w-3" />
-                                    <span>{featured.bacaan}</span>
+                <Link href="/article/trending" className="lg:col-span-3">
+                    <Card className="overflow-hidden group cursor-pointer hover:shadow-lg transition-all h-full">
+                        <div className="h-56 sm:h-64 bg-linear-to-br from-[#609A26]/15 to-[#206536]/15 flex items-center justify-center relative">
+                            <span className="text-7xl">{featured.thumbnail}</span>
+                            {featured.trending && (
+                                <div className="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
+                                    <TrendingUp className="h-3 w-3" /> TRENDING
                                 </div>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <div className="flex items-center gap-1">
-                                    <Eye className="h-3 w-3" />
-                                    <span>{(featured.views / 1000).toFixed(1)}K</span>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                    <Heart className="h-3 w-3" />
-                                    <span>{featured.likes}</span>
-                                </div>
-                            </div>
+                            )}
+                            <span className={`absolute top-3 right-3 px-2.5 py-1 text-[11px] font-medium rounded-full ${kategoriConfig[featured.kategori] || "bg-gray-100 text-gray-700"}`}>
+                                {featured.kategori}
+                            </span>
                         </div>
-                    </CardContent>
-                </Card>
+                        <CardContent className="p-5 space-y-3">
+                            <h3 className="text-lg font-bold text-foreground leading-snug group-hover:text-[#609A26] transition-colors">
+                                {featured.judul}
+                            </h3>
+                            <p className="text-sm text-muted-foreground line-clamp-2">
+                                {featured.ringkasan}
+                            </p>
+                            <div className="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t border-border/40">
+                                <div className="flex items-center gap-3">
+                                    <span className="font-medium text-foreground">{featured.penulis}</span>
+                                    <span>{featured.tanggal}</span>
+                                    <div className="flex items-center gap-1">
+                                        <Clock className="h-3 w-3" />
+                                        <span>{featured.bacaan}</span>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="flex items-center gap-1">
+                                        <Eye className="h-3 w-3" />
+                                        <span>{(featured.views / 1000).toFixed(1)}K</span>
+                                    </div>
+                                    <button onClick={(e) => handleLike(e, featured.judul)} className="flex items-center gap-1 hover:text-rose-500 transition-colors cursor-pointer">
+                                        <Heart className="h-3 w-3" />
+                                        <span>{featured.likes}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </Link>
 
                 {/* Trending Sidebar */}
                 <div className="lg:col-span-2 space-y-4">
@@ -177,31 +197,33 @@ const FeaturedArticleSection = () => {
                         Trending Sekarang
                     </h3>
                     {trending.map((artikel, idx) => (
-                        <Card key={artikel.id} className="hover:shadow-md transition-shadow cursor-pointer group">
-                            <CardContent className="p-4 flex gap-4">
-                                <div className="w-16 h-16 bg-linear-to-br from-[#609A26]/10 to-[#206536]/10 rounded-xl flex items-center justify-center shrink-0">
-                                    <span className="text-2xl">{artikel.thumbnail}</span>
-                                </div>
-                                <div className="min-w-0 space-y-1.5">
-                                    <div className="flex items-center gap-2">
-                                        <span className="text-xs font-bold text-red-500">#{idx + 2}</span>
-                                        <span className={`px-1.5 py-0.5 text-[10px] font-medium rounded-full ${kategoriConfig[artikel.kategori] || "bg-gray-100 text-gray-700"}`}>
-                                            {artikel.kategori}
-                                        </span>
+                        <Link key={artikel.id} href="/article/trending">
+                            <Card className="hover:shadow-md transition-shadow cursor-pointer group">
+                                <CardContent className="p-4 flex gap-4">
+                                    <div className="w-16 h-16 bg-linear-to-br from-[#609A26]/10 to-[#206536]/10 rounded-xl flex items-center justify-center shrink-0">
+                                        <span className="text-2xl">{artikel.thumbnail}</span>
                                     </div>
-                                    <h4 className="text-sm font-semibold text-foreground leading-snug line-clamp-2 group-hover:text-[#609A26] transition-colors">
-                                        {artikel.judul}
-                                    </h4>
-                                    <div className="flex items-center gap-3 text-[11px] text-muted-foreground">
-                                        <span>{artikel.penulis}</span>
-                                        <div className="flex items-center gap-1">
-                                            <Eye className="h-3 w-3" />
-                                            <span>{(artikel.views / 1000).toFixed(1)}K</span>
+                                    <div className="min-w-0 space-y-1.5">
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-xs font-bold text-red-500">#{idx + 2}</span>
+                                            <span className={`px-1.5 py-0.5 text-[10px] font-medium rounded-full ${kategoriConfig[artikel.kategori] || "bg-gray-100 text-gray-700"}`}>
+                                                {artikel.kategori}
+                                            </span>
+                                        </div>
+                                        <h4 className="text-sm font-semibold text-foreground leading-snug line-clamp-2 group-hover:text-[#609A26] transition-colors">
+                                            {artikel.judul}
+                                        </h4>
+                                        <div className="flex items-center gap-3 text-[11px] text-muted-foreground">
+                                            <span>{artikel.penulis}</span>
+                                            <div className="flex items-center gap-1">
+                                                <Eye className="h-3 w-3" />
+                                                <span>{(artikel.views / 1000).toFixed(1)}K</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </CardContent>
-                        </Card>
+                                </CardContent>
+                            </Card>
+                        </Link>
                     ))}
                 </div>
             </div>
@@ -211,42 +233,46 @@ const FeaturedArticleSection = () => {
                 <h3 className="text-base font-semibold text-foreground">Artikel Terbaru</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                     {latest.map((artikel) => (
-                        <Card key={artikel.id} className="hover:shadow-md transition-shadow overflow-hidden group cursor-pointer">
-                            <div className="h-36 bg-linear-to-br from-[#609A26]/10 to-[#206536]/10 flex items-center justify-center relative">
-                                <span className="text-4xl">{artikel.thumbnail}</span>
-                                <span className={`absolute top-3 right-3 px-2 py-0.5 text-[11px] font-medium rounded-full ${kategoriConfig[artikel.kategori] || "bg-gray-100 text-gray-700"}`}>
-                                    {artikel.kategori}
-                                </span>
-                            </div>
-                            <CardContent className="p-4 space-y-2.5">
-                                <h4 className="text-sm font-semibold text-foreground leading-snug line-clamp-2 group-hover:text-[#609A26] transition-colors">
-                                    {artikel.judul}
-                                </h4>
-                                <p className="text-xs text-muted-foreground line-clamp-2">
-                                    {artikel.ringkasan}
-                                </p>
-                                <div className="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t border-border/40">
-                                    <div className="flex items-center gap-2">
-                                        <span className="font-medium text-foreground">{artikel.penulis}</span>
-                                        <div className="flex items-center gap-1">
-                                            <Clock className="h-3 w-3" />
-                                            <span>{artikel.bacaan}</span>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-3">
-                                        <div className="flex items-center gap-1">
-                                            <Heart className="h-3 w-3" />
-                                            <span>{artikel.likes}</span>
-                                        </div>
-                                        <div className="flex items-center gap-1">
-                                            <MessageCircle className="h-3 w-3" />
-                                            <span>{artikel.komentar}</span>
-                                        </div>
-                                        <Bookmark className="h-3.5 w-3.5 hover:text-[#609A26] cursor-pointer transition-colors" />
-                                    </div>
+                        <Link key={artikel.id} href="/article/trending">
+                            <Card className="hover:shadow-md transition-shadow overflow-hidden group cursor-pointer h-full">
+                                <div className="h-36 bg-linear-to-br from-[#609A26]/10 to-[#206536]/10 flex items-center justify-center relative">
+                                    <span className="text-4xl">{artikel.thumbnail}</span>
+                                    <span className={`absolute top-3 right-3 px-2 py-0.5 text-[11px] font-medium rounded-full ${kategoriConfig[artikel.kategori] || "bg-gray-100 text-gray-700"}`}>
+                                        {artikel.kategori}
+                                    </span>
                                 </div>
-                            </CardContent>
-                        </Card>
+                                <CardContent className="p-4 space-y-2.5">
+                                    <h4 className="text-sm font-semibold text-foreground leading-snug line-clamp-2 group-hover:text-[#609A26] transition-colors">
+                                        {artikel.judul}
+                                    </h4>
+                                    <p className="text-xs text-muted-foreground line-clamp-2">
+                                        {artikel.ringkasan}
+                                    </p>
+                                    <div className="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t border-border/40">
+                                        <div className="flex items-center gap-2">
+                                            <span className="font-medium text-foreground">{artikel.penulis}</span>
+                                            <div className="flex items-center gap-1">
+                                                <Clock className="h-3 w-3" />
+                                                <span>{artikel.bacaan}</span>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <button onClick={(e) => handleLike(e, artikel.judul)} className="flex items-center gap-1 hover:text-rose-500 transition-colors cursor-pointer">
+                                                <Heart className="h-3 w-3" />
+                                                <span>{artikel.likes}</span>
+                                            </button>
+                                            <div className="flex items-center gap-1">
+                                                <MessageCircle className="h-3 w-3" />
+                                                <span>{artikel.komentar}</span>
+                                            </div>
+                                            <button onClick={(e) => handleBookmark(e, artikel.judul)} className="hover:text-[#609A26] cursor-pointer transition-colors">
+                                                <Bookmark className="h-3.5 w-3.5" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </Link>
                     ))}
                 </div>
             </div>

@@ -5,6 +5,7 @@ import {
     Card,
     CardContent,
 } from "@/components/ui/card"
+import Link from "next/link"
 
 const kategoriData = [
     { nama: "Budidaya", emoji: "🌾", jumlahArtikel: 245, warna: "from-green-500/10 to-green-600/10 hover:from-green-500/15 hover:to-green-600/15", border: "hover:border-green-300" },
@@ -36,26 +37,27 @@ const KategoriSection = () => {
             {/* Category Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                 {kategoriData.map((kategori) => (
-                    <Card
-                        key={kategori.nama}
-                        className={`cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 ${kategori.border}`}
-                    >
-                        <CardContent className="p-0">
-                            <div className={`h-20 bg-linear-to-br ${kategori.warna} flex items-center justify-center transition-all`}>
-                                <span className="text-3xl">{kategori.emoji}</span>
-                            </div>
-                            <div className="p-3 flex items-center justify-between">
-                                <div>
-                                    <h3 className="text-sm font-semibold text-foreground">{kategori.nama}</h3>
-                                    <div className="flex items-center gap-1 text-[11px] text-muted-foreground mt-0.5">
-                                        <BookOpen className="h-3 w-3" />
-                                        <span>{kategori.jumlahArtikel} artikel</span>
-                                    </div>
+                    <Link key={kategori.nama} href="/article/kategori">
+                        <Card
+                            className={`cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 ${kategori.border} h-full`}
+                        >
+                            <CardContent className="p-0">
+                                <div className={`h-20 bg-linear-to-br ${kategori.warna} flex items-center justify-center transition-all`}>
+                                    <span className="text-3xl">{kategori.emoji}</span>
                                 </div>
-                                <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                            </div>
-                        </CardContent>
-                    </Card>
+                                <div className="p-3 flex items-center justify-between">
+                                    <div>
+                                        <h3 className="text-sm font-semibold text-foreground">{kategori.nama}</h3>
+                                        <div className="flex items-center gap-1 text-[11px] text-muted-foreground mt-0.5">
+                                            <BookOpen className="h-3 w-3" />
+                                            <span>{kategori.jumlahArtikel} artikel</span>
+                                        </div>
+                                    </div>
+                                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </Link>
                 ))}
             </div>
         </section>
