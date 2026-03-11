@@ -1,6 +1,6 @@
 "use client"
 
-import { Bell, ChevronDown, ShoppingCart } from "lucide-react"
+import { Bell, ChevronDown, ShoppingCart, LogOut, User, Package, Settings } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -12,18 +12,32 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useSelector, useDispatch } from "react-redux"
 import { selectCartItems, selectCartCount, selectCartTotal, removeFromCart } from "@/lib/redux/cart-slice"
 import Image from "next/image"
 import { Trash2 } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
+import { toast } from "sonner"
 
 const NavUserProfile = () => {
     const dispatch = useDispatch()
+    const router = useRouter()
     const items = useSelector(selectCartItems)
     const count = useSelector(selectCartCount)
     const total = useSelector(selectCartTotal)
     const previewItems = items.slice(-3).reverse()
+
+    const handleLogout = () => {
+        toast.success("Berhasil keluar dari akun", {
+            description: "Anda telah keluar. Mengarahkan ke halaman utama...",
+        })
+        setTimeout(() => {
+            router.push("/")
+        }, 1500)
+    }
+
+
 
     return (
         <div className="flex items-center gap-2 sm:gap-4 ml-auto">
@@ -170,20 +184,47 @@ const NavUserProfile = () => {
                         <ChevronDown className="w-4 h-4 text-white/70" />
                     </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-52">
-                    <DropdownMenuLabel>Akun Saya</DropdownMenuLabel>
+                <DropdownMenuContent align="end" className="w-56 rounded-xl shadow-xl border border-gray-200">
+                    {/* User Info */}
+                    <DropdownMenuLabel className="py-3">
+                        <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-full bg-[#206536] flex items-center justify-center">
+                                <User className="w-4.5 h-4.5 text-white" />
+                            </div>
+                            <div>
+                                <p className="text-sm font-semibold text-gray-800">Andi</p>
+                                <p className="text-xs text-gray-500 font-normal">andi@sitani.id</p>
+                            </div>
+                        </div>
+                    </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild className="cursor-pointer">
-                        <Link href="/marketplace/profil">Profil</Link>
+
+                    <DropdownMenuItem asChild className="cursor-pointer gap-2.5 py-2.5">
+                        <Link href="/marketplace/profil">
+                            <User className="w-4 h-4" />
+                            Profil Saya
+                        </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem asChild className="cursor-pointer">
-                        <Link href="/marketplace/pesanan">Pesanan Saya</Link>
+                    <DropdownMenuItem asChild className="cursor-pointer gap-2.5 py-2.5">
+                        <Link href="/marketplace/pesanan">
+                            <Package className="w-4 h-4" />
+                            Pesanan Saya
+                        </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem asChild className="cursor-pointer">
-                        <Link href="/marketplace/pengaturan">Pengaturan</Link>
+                    <DropdownMenuItem asChild className="cursor-pointer gap-2.5 py-2.5">
+                        <Link href="/marketplace/pengaturan">
+                            <Settings className="w-4 h-4" />
+                            Pengaturan
+                        </Link>
                     </DropdownMenuItem>
+
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-600">
+
+                    <DropdownMenuItem
+                        className="cursor-pointer gap-2.5 py-2.5 text-red-600 focus:text-red-600 focus:bg-red-50"
+                        onClick={handleLogout}
+                    >
+                        <LogOut className="w-4 h-4" />
                         Keluar
                     </DropdownMenuItem>
                 </DropdownMenuContent>

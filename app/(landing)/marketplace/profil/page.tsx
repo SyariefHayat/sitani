@@ -1,16 +1,16 @@
 import Navbar from "@/components/layouts/landing-layout/navbar"
 import NavUserProfile from "@/components/modules/landing/marketplace/nav-user-profile"
-import CartContent from "@/components/modules/landing/marketplace/cart-content"
+import ProfilContent from "@/components/modules/landing/marketplace/profil-content"
 
-const CartPage = () => {
+const ProfilPage = () => {
     return (
         <>
             <Navbar>
                 <NavUserProfile />
             </Navbar>
-            <CartContent />
+            <ProfilContent />
         </>
     )
 }
 
-export default CartPage
+export default ProfilPage

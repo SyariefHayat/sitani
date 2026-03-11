@@ -1,4 +1,4 @@
-import { BookOpen, Bookmark, Briefcase, CalendarClock, FileText, History, LayoutDashboard, LucideIcon, Package, ShoppingCart, Truck, TrendingUp, Warehouse } from "lucide-react";
+import { BookOpen, Bookmark, Briefcase, CalendarClock, FileText, Heart, History, LayoutDashboard, LucideIcon, Package, ShoppingCart, Truck, TrendingUp, Warehouse } from "lucide-react";
 
 export const MENU_ITEMS = [
     { label: "Marketplace", href: "/marketplace" },
@@ -254,6 +254,14 @@ export const STATS_ARTICLE = [
     { icon: "/total-transaksi.png", alt: "icon penulis", value: "245", label: "Penulis Aktif" },
     { icon: "/proyek.png", alt: "icon pembaca", value: "89K+", label: "Total Pembaca" },
     { icon: "/investor.png", alt: "icon kategori", value: "18", label: "Kategori" },
+]
+
+export const MARKETPLACE_MENU: { label: string; href: string; icon: LucideIcon }[] = [
+    { label: "Beranda", href: "/marketplace", icon: LayoutDashboard },
+    { label: "Kategori", href: "/marketplace/kategori", icon: ShoppingCart },
+    { label: "Pesanan Saya", href: "/marketplace/pesanan", icon: Package },
+    { label: "Riwayat", href: "/marketplace/riwayat", icon: History },
+    { label: "Favorit", href: "/marketplace/favorit", icon: Heart },
 ]
 
 export const MARKETPLACE_PRODUCTS = [
