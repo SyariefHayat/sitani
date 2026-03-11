@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { Video, Calendar, Clock, Users, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -7,6 +8,7 @@ import {
     CardContent,
     CardHeader,
 } from "@/components/ui/card"
+import { toast } from "sonner"
 
 const webinarData = [
     {
@@ -62,6 +64,18 @@ const statusConfig: Record<string, { label: string; className: string }> = {
 }
 
 const WebinarSection = () => {
+    const handleDaftar = (judul: string) => {
+        toast.success(`Berhasil mendaftar webinar "${judul}"`, {
+            description: "Link webinar akan dikirim ke email Anda sebelum acara dimulai.",
+        })
+    }
+
+    const handleTontonRekaman = (judul: string) => {
+        toast.info(`Membuka rekaman "${judul}"`, {
+            description: "Rekaman akan segera diputar...",
+        })
+    }
+
     return (
         <section className="w-full px-6 sm:px-10 lg:px-16 py-8 sm:py-12">
             {/* Section Header */}
@@ -75,8 +89,8 @@ const WebinarSection = () => {
                         <p className="text-sm text-muted-foreground">Tingkatkan pengetahuan melalui webinar dari para ahli</p>
                     </div>
                 </div>
-                <Button variant="outline" size="sm" className="cursor-pointer font-medium text-[#609A26] border-[#609A26]/30 hover:bg-[#609A26]/5">
-                    Semua Webinar
+                <Button asChild variant="outline" size="sm" className="cursor-pointer font-medium text-[#609A26] border-[#609A26]/30 hover:bg-[#609A26]/5">
+                    <Link href="/academy/webinar">Semua Webinar</Link>
                 </Button>
             </div>
 
@@ -138,7 +152,11 @@ const WebinarSection = () => {
 
                             <div className="mt-4">
                                 {webinar.status === "upcoming" && webinar.peserta < webinar.maxPeserta && (
-                                    <Button size="sm" className="w-full bg-[#609A26] hover:bg-[#528520] text-white cursor-pointer gap-1.5">
+                                    <Button
+                                        size="sm"
+                                        className="w-full bg-[#609A26] hover:bg-[#528520] text-white cursor-pointer gap-1.5"
+                                        onClick={() => handleDaftar(webinar.judul)}
+                                    >
                                         Daftar Sekarang
                                     </Button>
                                 )}
@@ -148,7 +166,12 @@ const WebinarSection = () => {
                                     </Button>
                                 )}
                                 {webinar.status === "selesai" && (
-                                    <Button size="sm" variant="outline" className="w-full cursor-pointer gap-1.5 text-[#609A26] border-[#609A26]/30 hover:bg-[#609A26]/5">
+                                    <Button
+                                        size="sm"
+                                        variant="outline"
+                                        className="w-full cursor-pointer gap-1.5 text-[#609A26] border-[#609A26]/30 hover:bg-[#609A26]/5"
+                                        onClick={() => handleTontonRekaman(webinar.judul)}
+                                    >
                                         <ExternalLink className="h-3.5 w-3.5" /> Tonton Rekaman
                                     </Button>
                                 )}

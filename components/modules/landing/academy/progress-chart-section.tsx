@@ -1,8 +1,10 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import { Award, Download, Calendar, ExternalLink } from "lucide-react"
+import { toast } from "sonner"
 
 import {
     Card,
@@ -112,6 +114,12 @@ const sertifikatData = [
 const ProgressChartSection = () => {
     const [activePeriod, setActivePeriod] = useState("6bulan")
 
+    const handleDownload = (judul: string) => {
+        toast.success(`Mengunduh sertifikat "${judul}"`, {
+            description: "Sertifikat akan terunduh dalam beberapa saat...",
+        })
+    }
+
     return (
         <section className="w-full px-6 sm:px-10 lg:px-16 py-8 sm:py-12">
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
@@ -182,9 +190,9 @@ const ProgressChartSection = () => {
                                 </div>
                                 <h3 className="text-lg font-semibold text-foreground">Sertifikat Saya</h3>
                             </div>
-                            <button className="text-sm text-[#609A26] hover:underline cursor-pointer font-medium">
+                            <Link href="/academy/sertifikat" className="text-sm text-[#609A26] hover:underline cursor-pointer font-medium">
                                 Lihat Semua
-                            </button>
+                            </Link>
                         </div>
                     </CardHeader>
                     <CardContent className="space-y-3">
@@ -202,7 +210,12 @@ const ProgressChartSection = () => {
                                             {sertifikat.instruktur}
                                         </p>
                                     </div>
-                                    <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0 cursor-pointer text-muted-foreground hover:text-[#609A26]">
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-7 w-7 shrink-0 cursor-pointer text-muted-foreground hover:text-[#609A26]"
+                                        onClick={() => handleDownload(sertifikat.judul)}
+                                    >
                                         <Download className="h-3.5 w-3.5" />
                                     </Button>
                                 </div>

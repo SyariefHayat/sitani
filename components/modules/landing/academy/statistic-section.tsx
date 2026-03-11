@@ -1,12 +1,23 @@
+"use client"
+
 import { STATS_ACADEMY } from "@/lib/constants"
 import Image from "next/image"
+import Link from "next/link"
+
+const statLinks: Record<string, string> = {
+    "Kelas Diikuti": "/academy/kelas-saya",
+    "Jam Belajar": "/academy/kelas-saya",
+    "Sertifikat Diperoleh": "/academy/sertifikat",
+    "Progress Rata-rata": "/academy/kelas-saya",
+}
 
 const StatisticSection = () => {
     return (
         <section className="w-full px-6 sm:px-10 lg:px-16 py-8 sm:py-10 lg:py-14 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
             {STATS_ACADEMY.map((stat) => (
-                <div
+                <Link
                     key={stat.label}
+                    href={statLinks[stat.label] || "/academy"}
                     className="w-full flex items-center gap-3 bg-white rounded-xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-2 py-4 transition-all duration-300 hover:shadow-[0_4px_20px_rgba(26,69,40,0.12)] hover:-translate-y-0.5"
                 >
                     <div className="shrink-0">
@@ -26,7 +37,7 @@ const StatisticSection = () => {
                             {stat.label}
                         </p>
                     </div>
-                </div>
+                </Link>
             ))}
         </section>
     )

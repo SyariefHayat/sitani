@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { BookOpen, Clock, Users, Star, Play } from "lucide-react"
 import {
     Card,
@@ -10,6 +11,7 @@ import { Button } from "@/components/ui/button"
 const kelasData = [
     {
         id: 1,
+        slug: "budidaya-padi-modern",
         judul: "Budidaya Padi Modern",
         instruktur: "Dr. Ahmad Fauzi",
         kategori: "Pertanian",
@@ -22,6 +24,7 @@ const kelasData = [
     },
     {
         id: 2,
+        slug: "smart-farming-iot",
         judul: "Teknik Hidroponik untuk Pemula",
         instruktur: "Ir. Sari Dewi",
         kategori: "Teknologi Tani",
@@ -34,6 +37,7 @@ const kelasData = [
     },
     {
         id: 3,
+        slug: "manajemen-keuangan-petani",
         judul: "Manajemen Rantai Pasok Pertanian",
         instruktur: "Prof. Budi Santoso",
         kategori: "Bisnis",
@@ -46,6 +50,7 @@ const kelasData = [
     },
     {
         id: 4,
+        slug: "pengendalian-hama-terpadu",
         judul: "Pengendalian Hama Terpadu",
         instruktur: "Dr. Rina Wulandari",
         kategori: "Pertanian",
@@ -58,6 +63,7 @@ const kelasData = [
     },
     {
         id: 5,
+        slug: "agribisnis-pemasaran",
         judul: "Agribusiness & Digital Marketing",
         instruktur: "Hendra Kusuma, MBA",
         kategori: "Bisnis",
@@ -70,6 +76,7 @@ const kelasData = [
     },
     {
         id: 6,
+        slug: "pertanian-organik-lanjutan",
         judul: "Pengolahan Hasil Panen",
         instruktur: "Ir. Made Dharma",
         kategori: "Pasca Panen",
@@ -102,80 +109,82 @@ const KelasPopulerSection = () => {
                         <p className="text-sm text-muted-foreground">Kelas yang paling banyak diminati peserta</p>
                     </div>
                 </div>
-                <Button variant="outline" size="sm" className="cursor-pointer font-medium text-[#609A26] border-[#609A26]/30 hover:bg-[#609A26]/5">
-                    Lihat Semua Kelas
+                <Button asChild variant="outline" size="sm" className="cursor-pointer font-medium text-[#609A26] border-[#609A26]/30 hover:bg-[#609A26]/5">
+                    <Link href="/academy/kelas-saya">Lihat Semua Kelas</Link>
                 </Button>
             </div>
 
             {/* Course Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {kelasData.map((kelas) => (
-                    <Card key={kelas.id} className="hover:shadow-md transition-shadow overflow-hidden group cursor-pointer">
-                        {/* Thumbnail Area */}
-                        <div className="h-36 bg-linar-to-br from-[#609A26]/10 to-[#206536]/10 flex items-center justify-center relative">
-                            <span className="text-5xl">{kelas.thumbnail}</span>
-                            {kelas.progress > 0 && kelas.progress < 100 && (
-                                <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-muted">
-                                    <div
-                                        className="h-full bg-[#609A26] transition-all"
-                                        style={{ width: `${kelas.progress}%` }}
-                                    />
-                                </div>
-                            )}
-                            {kelas.progress === 100 && (
-                                <div className="absolute top-3 right-3 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                                    SELESAI
-                                </div>
-                            )}
-                            {kelas.progress === 0 && (
-                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all flex items-center justify-center">
-                                    <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-full p-3 shadow-lg">
-                                        <Play className="h-6 w-6 text-[#609A26] fill-[#609A26]" />
+                    <Link key={kelas.id} href={`/academy/course/${kelas.slug}`}>
+                        <Card className="hover:shadow-md transition-shadow overflow-hidden group cursor-pointer h-full">
+                            {/* Thumbnail Area */}
+                            <div className="h-36 bg-linar-to-br from-[#609A26]/10 to-[#206536]/10 flex items-center justify-center relative">
+                                <span className="text-5xl">{kelas.thumbnail}</span>
+                                {kelas.progress > 0 && kelas.progress < 100 && (
+                                    <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-muted">
+                                        <div
+                                            className="h-full bg-[#609A26] transition-all"
+                                            style={{ width: `${kelas.progress}%` }}
+                                        />
                                     </div>
-                                </div>
-                            )}
-                        </div>
-
-                        <CardContent className="p-4 space-y-3">
-                            <div className="flex items-center gap-2">
-                                <span className={`px-2 py-0.5 text-[11px] font-medium rounded-full ${levelConfig[kelas.level]}`}>
-                                    {kelas.level}
-                                </span>
-                                <span className="text-[11px] text-muted-foreground">{kelas.kategori}</span>
+                                )}
+                                {kelas.progress === 100 && (
+                                    <div className="absolute top-3 right-3 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                        SELESAI
+                                    </div>
+                                )}
+                                {kelas.progress === 0 && (
+                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all flex items-center justify-center">
+                                        <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-full p-3 shadow-lg">
+                                            <Play className="h-6 w-6 text-[#609A26] fill-[#609A26]" />
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
-                            <h3 className="text-sm font-semibold text-foreground leading-snug line-clamp-2">
-                                {kelas.judul}
-                            </h3>
+                            <CardContent className="p-4 space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className={`px-2 py-0.5 text-[11px] font-medium rounded-full ${levelConfig[kelas.level]}`}>
+                                        {kelas.level}
+                                    </span>
+                                    <span className="text-[11px] text-muted-foreground">{kelas.kategori}</span>
+                                </div>
 
-                            <p className="text-xs text-muted-foreground">
-                                oleh <span className="font-medium text-foreground">{kelas.instruktur}</span>
-                            </p>
+                                <h3 className="text-sm font-semibold text-foreground leading-snug line-clamp-2">
+                                    {kelas.judul}
+                                </h3>
 
-                            <div className="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t border-border/40">
-                                <div className="flex items-center gap-3">
-                                    <div className="flex items-center gap-1">
-                                        <Clock className="h-3 w-3" />
-                                        <span>{kelas.durasi}</span>
+                                <p className="text-xs text-muted-foreground">
+                                    oleh <span className="font-medium text-foreground">{kelas.instruktur}</span>
+                                </p>
+
+                                <div className="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t border-border/40">
+                                    <div className="flex items-center gap-3">
+                                        <div className="flex items-center gap-1">
+                                            <Clock className="h-3 w-3" />
+                                            <span>{kelas.durasi}</span>
+                                        </div>
+                                        <div className="flex items-center gap-1">
+                                            <Users className="h-3 w-3" />
+                                            <span>{kelas.peserta.toLocaleString()}</span>
+                                        </div>
                                     </div>
-                                    <div className="flex items-center gap-1">
-                                        <Users className="h-3 w-3" />
-                                        <span>{kelas.peserta.toLocaleString()}</span>
+                                    <div className="flex items-center gap-1 text-amber-500">
+                                        <Star className="h-3 w-3 fill-amber-500" />
+                                        <span className="font-semibold">{kelas.rating}</span>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-1 text-amber-500">
-                                    <Star className="h-3 w-3 fill-amber-500" />
-                                    <span className="font-semibold">{kelas.rating}</span>
-                                </div>
-                            </div>
 
-                            {kelas.progress > 0 && kelas.progress < 100 && (
-                                <div className="text-xs text-[#609A26] font-medium">
-                                    Progress: {kelas.progress}%
-                                </div>
-                            )}
-                        </CardContent>
-                    </Card>
+                                {kelas.progress > 0 && kelas.progress < 100 && (
+                                    <div className="text-xs text-[#609A26] font-medium">
+                                        Progress: {kelas.progress}%
+                                    </div>
+                                )}
+                            </CardContent>
+                        </Card>
+                    </Link>
                 ))}
             </div>
         </section>
