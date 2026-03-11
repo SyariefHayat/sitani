@@ -15,6 +15,7 @@ import {
     ChartTooltipContent,
     type ChartConfig,
 } from "@/components/ui/chart"
+import Link from "next/link"
 
 const chartData: Record<string, { month: string; stok: number; permintaan: number }[]> = {
     "1bulan": [
@@ -201,9 +202,11 @@ const BarChartSection = () => {
                                 </div>
                                 <h3 className="text-lg font-semibold text-foreground">Jadwal Distribusi</h3>
                             </div>
-                            <button className="text-sm text-[#609A26] hover:underline cursor-pointer font-medium">
-                                Lihat Semua
-                            </button>
+                            <Link href="/distributor/jadwal-distribusi">
+                                <button className="text-sm text-[#609A26] hover:underline cursor-pointer font-medium">
+                                    Lihat Semua
+                                </button>
+                            </Link>
                         </div>
                     </CardHeader>
                     <CardContent className="space-y-3">
