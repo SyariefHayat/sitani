@@ -11,13 +11,14 @@ import { eq } from "drizzle-orm";
 
 export async function GET(
   _: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
+    const { id } = await params;
     const [user] = await db
       .select()
       .from(users)
-      .where(eq(users.id, params.id))
+      .where(eq(users.id, id))
       .limit(1);
     if (!user)
       return NextResponse.json(
@@ -60,16 +61,17 @@ export async function GET(
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
+    const { id } = await params;
     const body = await req.json();
     const { name, email, telepon, role } = body;
 
     const [updated] = await db
       .update(users)
       .set({ name, email, telepon, role, updatedAt: new Date() })
-      .where(eq(users.id, params.id))
+      .where(eq(users.id, id))
       .returning();
 
     if (!updated)
@@ -89,12 +91,13 @@ export async function PATCH(
 
 export async function DELETE(
   _: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
+    const { id } = await params;
     const [deleted] = await db
       .delete(users)
-      .where(eq(users.id, params.id))
+      .where(eq(users.id, id))
       .returning();
     if (!deleted)
       return NextResponse.json(

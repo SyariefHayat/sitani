@@ -19,6 +19,8 @@ import {
   ShoppingCart,
   TrendingUp,
   GraduationCap,
+  Truck,
+  Store,
   X,
   Loader2,
   AlertTriangle,
@@ -27,7 +29,7 @@ import { toast, Toaster } from "sonner";
 
 // ==================== TYPES ====================
 
-type UserRole = "petani" | "pembeli" | "investor" | "peserta" | "admin";
+type UserRole = "petani" | "pembeli" | "investor" | "peserta" | "admin" | "distributor" | "logistik";
 
 interface UserData {
   id: string;
@@ -36,6 +38,8 @@ interface UserData {
   role: string | null;
   telepon: string | null;
   createdAt: string | null;
+  provinsi?: string | null;
+  kota?: string | null;
   profile?: {
     provinsi?: string | null;
     kota?: string | null;
@@ -56,6 +60,14 @@ interface EditForm {
   role: string;
 }
 
+interface CreateForm {
+  name: string;
+  email: string;
+  password: string;
+  telepon: string;
+  role: string;
+}
+
 // ==================== CONFIG ====================
 
 const roleConfig: Record<
@@ -68,6 +80,12 @@ const roleConfig: Record<
     icon: Sprout,
     label: "Petani",
   },
+  distributor: {
+    color: "text-orange-700",
+    bgColor: "bg-orange-50",
+    icon: Store,
+    label: "Distributor",
+  },
   pembeli: {
     color: "text-blue-700",
     bgColor: "bg-blue-50",
@@ -79,6 +97,12 @@ const roleConfig: Record<
     bgColor: "bg-violet-50",
     icon: TrendingUp,
     label: "Investor",
+  },
+  logistik: {
+    color: "text-amber-700",
+    bgColor: "bg-amber-50",
+    icon: Truck,
+    label: "Logistik",
   },
   peserta: {
     color: "text-pink-700",
@@ -94,7 +118,7 @@ const roleConfig: Record<
   },
 };
 
-const roleOptions = ["petani", "pembeli", "investor", "peserta", "admin"];
+const roleOptions = ["petani", "distributor", "pembeli", "investor", "logistik", "peserta", "admin"];
 
 // ==================== COMPONENT ====================
 
@@ -103,6 +127,8 @@ const UsersContent = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRole, setSelectedRole] = useState("Semua");
+  const [selectedProvinsi, setSelectedProvinsi] = useState("Semua");
+  const [selectedKota, setSelectedKota] = useState("Semua");
   const [currentPage, setCurrentPage] = useState(1);
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
   const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
@@ -119,6 +145,15 @@ const UsersContent = () => {
   const [deleteConfirm, setDeleteConfirm] = useState<UserData | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [bulkDeleteLoading, setBulkDeleteLoading] = useState(false);
+  const [createModal, setCreateModal] = useState(false);
+  const [createForm, setCreateForm] = useState<CreateForm>({
+    name: "",
+    email: "",
+    password: "",
+    telepon: "",
+    role: "petani",
+  });
+  const [createLoading, setCreateLoading] = useState(false);
 
   const itemsPerPage = 8;
 
@@ -141,6 +176,19 @@ const UsersContent = () => {
   }, [fetchUsers]);
 
   // ── Filter ───────────────────────────────────────────────────────
+  const uniqueProvinsi = Array.from(
+    new Set(allUsers.map((u) => u.provinsi).filter(Boolean) as string[]),
+  ).sort();
+
+  const uniqueKota = Array.from(
+    new Set(
+      allUsers
+        .filter((u) => selectedProvinsi === "Semua" || u.provinsi === selectedProvinsi)
+        .map((u) => u.kota)
+        .filter(Boolean) as string[],
+    ),
+  ).sort();
+
   const filteredUsers = allUsers.filter((user) => {
     const q = searchQuery.toLowerCase();
     const matchSearch =
@@ -149,7 +197,11 @@ const UsersContent = () => {
       user.email?.toLowerCase().includes(q) ||
       user.id.toLowerCase().includes(q);
     const matchRole = selectedRole === "Semua" || user.role === selectedRole;
-    return matchSearch && matchRole;
+    const matchProvinsi =
+      selectedProvinsi === "Semua" || user.provinsi === selectedProvinsi;
+    const matchKota =
+      selectedKota === "Semua" || user.kota === selectedKota;
+    return matchSearch && matchRole && matchProvinsi && matchKota;
   });
 
   const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
@@ -291,6 +343,32 @@ const UsersContent = () => {
     URL.revokeObjectURL(url);
   };
 
+  // ── Create user ─────────────────────────────────────────────────
+  const handleCreate = async () => {
+    if (!createForm.name || !createForm.email || !createForm.password || !createForm.role) {
+      toast.error("Nama, email, password, dan role wajib diisi");
+      return;
+    }
+    setCreateLoading(true);
+    try {
+      const res = await fetch("/api/admin/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(createForm),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Gagal membuat user");
+      toast.success("User berhasil dibuat");
+      setCreateModal(false);
+      setCreateForm({ name: "", email: "", password: "", telepon: "", role: "petani" });
+      fetchUsers();
+    } catch (err: any) {
+      toast.error(err.message || "Gagal membuat user");
+    } finally {
+      setCreateLoading(false);
+    }
+  };
+
   // ==================== RENDER ====================
 
   return (
@@ -305,6 +383,13 @@ const UsersContent = () => {
             Kelola semua pengguna platform SiTani
           </p>
         </div>
+        <button
+          onClick={() => setCreateModal(true)}
+          className="flex items-center gap-2 px-4 py-2.5 bg-[#1a4528] text-white rounded-lg text-sm font-medium hover:bg-[#2d5a3d] transition-colors cursor-pointer"
+        >
+          <Plus className="w-4 h-4" />
+          Tambah User
+        </button>
       </div>
 
       {/* Stats */}
@@ -390,6 +475,37 @@ const UsersContent = () => {
               </option>
             ))}
           </select>
+          <select
+            value={selectedProvinsi}
+            onChange={(e) => {
+              setSelectedProvinsi(e.target.value);
+              setSelectedKota("Semua");
+              setCurrentPage(1);
+            }}
+            className="px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2d5a3d]/30 focus:border-[#2d5a3d] text-gray-700"
+          >
+            <option value="Semua">Semua Provinsi</option>
+            {uniqueProvinsi.map((p) => (
+              <option key={p} value={p}>
+                {p}
+              </option>
+            ))}
+          </select>
+          <select
+            value={selectedKota}
+            onChange={(e) => {
+              setSelectedKota(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2d5a3d]/30 focus:border-[#2d5a3d] text-gray-700"
+          >
+            <option value="Semua">Semua Kota</option>
+            {uniqueKota.map((k) => (
+              <option key={k} value={k}>
+                {k}
+              </option>
+            ))}
+          </select>
           <button
             onClick={handleExport}
             className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors ml-auto"
@@ -441,6 +557,8 @@ const UsersContent = () => {
                 </th>
                 <th className="pb-3 font-medium">User</th>
                 <th className="pb-3 font-medium">Role</th>
+                <th className="pb-3 font-medium">Provinsi</th>
+                <th className="pb-3 font-medium">Kota</th>
                 <th className="pb-3 font-medium">Telepon</th>
                 <th className="pb-3 font-medium">Bergabung</th>
                 <th className="pb-3 font-medium text-right">Aksi</th>
@@ -449,14 +567,14 @@ const UsersContent = () => {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="py-12 text-center">
+                  <td colSpan={8} className="py-12 text-center">
                     <Loader2 className="w-8 h-8 animate-spin mx-auto text-[#1a4528]" />
                     <p className="text-sm text-gray-400 mt-2">Memuat data...</p>
                   </td>
                 </tr>
               ) : paginatedUsers.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-12 text-center text-gray-400">
+                  <td colSpan={8} className="py-12 text-center text-gray-400">
                     <Users className="w-12 h-12 mx-auto mb-3 text-gray-300" />
                     <p className="font-medium text-gray-500">
                       Tidak ada user ditemukan
@@ -510,6 +628,12 @@ const UsersContent = () => {
                           <RoleIcon className="w-3 h-3" />
                           {role.label}
                         </span>
+                      </td>
+                      <td className="py-3 text-gray-600 text-xs">
+                        {user.provinsi || "-"}
+                      </td>
+                      <td className="py-3 text-gray-600 text-xs">
+                        {user.kota || "-"}
                       </td>
                       <td className="py-3 text-gray-600 text-xs">
                         {user.telepon || "-"}
@@ -856,6 +980,89 @@ const UsersContent = () => {
               <button
                 onClick={() => setDeleteConfirm(null)}
                 className="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200"
+              >
+                Batal
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Create User Modal ── */}
+      {createModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+          onClick={() => setCreateModal(false)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="text-lg font-bold text-gray-900">Tambah User Baru</h3>
+              <button
+                onClick={() => setCreateModal(false)}
+                className="p-1 rounded-lg hover:bg-gray-100"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              {[
+                { label: "Nama", key: "name", type: "text", placeholder: "Masukkan nama lengkap" },
+                { label: "Email", key: "email", type: "email", placeholder: "Masukkan email" },
+                { label: "Password", key: "password", type: "password", placeholder: "Masukkan password" },
+                { label: "Telepon", key: "telepon", type: "tel", placeholder: "Masukkan no. telepon (opsional)" },
+              ].map(({ label, key, type, placeholder }) => (
+                <div key={key}>
+                  <label className="text-sm font-medium text-gray-700 block mb-1">
+                    {label} {key !== "telepon" && <span className="text-red-500">*</span>}
+                  </label>
+                  <input
+                    type={type}
+                    value={createForm[key as keyof CreateForm]}
+                    onChange={(e) =>
+                      setCreateForm((prev) => ({
+                        ...prev,
+                        [key]: e.target.value,
+                      }))
+                    }
+                    placeholder={placeholder}
+                    className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2d5a3d]/30 focus:border-[#2d5a3d] placeholder:text-gray-400"
+                  />
+                </div>
+              ))}
+              <div>
+                <label className="text-sm font-medium text-gray-700 block mb-1">
+                  Role <span className="text-red-500">*</span>
+                </label>
+                <select
+                  value={createForm.role}
+                  onChange={(e) =>
+                    setCreateForm((prev) => ({ ...prev, role: e.target.value }))
+                  }
+                  className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2d5a3d]/30 focus:border-[#2d5a3d]"
+                >
+                  {roleOptions.map((r) => (
+                    <option key={r} value={r}>
+                      {roleConfig[r]?.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="flex gap-2 mt-6">
+              <button
+                onClick={handleCreate}
+                disabled={createLoading}
+                className="flex-1 px-4 py-2.5 bg-[#1a4528] text-white rounded-lg text-sm font-medium hover:bg-[#2d5a3d] flex items-center justify-center gap-2 cursor-pointer"
+              >
+                {createLoading && <Loader2 className="w-4 h-4 animate-spin" />}
+                Buat User
+              </button>
+              <button
+                onClick={() => setCreateModal(false)}
+                className="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 cursor-pointer"
               >
                 Batal
               </button>
