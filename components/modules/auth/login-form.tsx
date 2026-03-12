@@ -71,9 +71,13 @@ const LoginForm = () => {
       return;
     }
 
-    // Ambil session untuk cek role
-    const session = await getSession();
-    const role = (session?.user as any)?.role;
+    toast.success("Berhasil masuk!");
+
+    // Paksa refresh session dulu baru ambil
+    await fetch("/api/auth/session");
+    const sessionRes = await fetch("/api/auth/session");
+    const session = await sessionRes.json();
+    const role = session?.user?.role;
 
     const roleRedirect: Record<string, string> = {
       admin: "/dashboard",
@@ -82,8 +86,6 @@ const LoginForm = () => {
       pembeli: "/marketplace",
       peserta: "/academy",
     };
-
-    toast.success("Berhasil masuk!");
 
     router.push(roleRedirect[role] ?? "/");
   };
