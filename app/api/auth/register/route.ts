@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcrypt";
-import { db, users, petaniProfiles, investorProfiles, pembeliProfiles, pesertaProfiles } from "@/lib/db/schema";
+import bcrypt from "bcryptjs";
+import {
+  db,
+  users,
+  petaniProfiles,
+  investorProfiles,
+  pembeliProfiles,
+  pesertaProfiles,
+} from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function POST(req: NextRequest) {
@@ -12,7 +19,7 @@ export async function POST(req: NextRequest) {
     if (!nama || !email || !password || !role) {
       return NextResponse.json(
         { error: "Nama, email, password, dan role wajib diisi" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -26,7 +33,7 @@ export async function POST(req: NextRequest) {
     if (existingUser) {
       return NextResponse.json(
         { error: "Email sudah terdaftar" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -87,7 +94,7 @@ export async function POST(req: NextRequest) {
       default:
         return NextResponse.json(
           { error: "Role tidak valid" },
-          { status: 400 }
+          { status: 400 },
         );
     }
 
@@ -101,13 +108,13 @@ export async function POST(req: NextRequest) {
           role: newUser.role,
         },
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Register error:", error);
     return NextResponse.json(
       { error: "Terjadi kesalahan saat registrasi" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

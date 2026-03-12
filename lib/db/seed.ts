@@ -1,12 +1,13 @@
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
+import bcrypt from "bcryptjs";
 import {
   users,
   petaniProfiles,
   investorProfiles,
   pembeliProfiles,
   pesertaProfiles,
-} from "./schema"; // sesuaikan path ke schema Anda
+} from "./schema";
 
 // ─── DB Connection ───────────────────────────────────────────────────
 
@@ -17,6 +18,10 @@ if (!DATABASE_URL) {
 
 const queryClient = postgres(DATABASE_URL);
 const db = drizzle({ client: queryClient });
+
+// ─── Helper ──────────────────────────────────────────────────────────
+
+const hash = (plain: string) => bcrypt.hash(plain, 10);
 
 // ─── Seed Data ───────────────────────────────────────────────────────
 
@@ -30,7 +35,7 @@ async function seed() {
     .values({
       name: "Budi Santoso",
       email: "budi.petani@example.com",
-      password: "hashed_password_123", // gunakan bcrypt di production
+      password: await hash("password_petani"),
       telepon: "081234567890",
       nik: "3271010101800001",
       role: "petani",
@@ -42,7 +47,7 @@ async function seed() {
     .values({
       name: "Rina Kusuma",
       email: "rina.investor@example.com",
-      password: "hashed_password_456",
+      password: await hash("password_investor"),
       telepon: "082345678901",
       nik: "3271010101850002",
       role: "investor",
@@ -54,7 +59,7 @@ async function seed() {
     .values({
       name: "Siti Rahayu",
       email: "siti.pembeli@example.com",
-      password: "hashed_password_789",
+      password: await hash("password_pembeli"),
       telepon: "083456789012",
       nik: "3271010101900003",
       role: "pembeli",
@@ -66,7 +71,7 @@ async function seed() {
     .values({
       name: "Ahmad Fauzi",
       email: "ahmad.peserta@example.com",
-      password: "hashed_password_012",
+      password: await hash("password_peserta"),
       telepon: "084567890123",
       nik: "3271010101950004",
       role: "peserta",
@@ -78,7 +83,7 @@ async function seed() {
     .values({
       name: "Admin Utama",
       email: "admin@example.com",
-      password: "hashed_password_admin",
+      password: await hash("password_admin"),
       telepon: "085678901234",
       nik: "3271010101700005",
       role: "admin",
