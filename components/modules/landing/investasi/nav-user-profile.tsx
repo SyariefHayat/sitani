@@ -12,19 +12,11 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
+import { signOut } from "next-auth/react"
 
 const NavUserProfile = () => {
-    const router = useRouter()
-
     const handleLogout = () => {
-        toast.success("Berhasil keluar dari akun", {
-            description: "Anda telah keluar. Mengarahkan ke halaman utama...",
-        })
-        setTimeout(() => {
-            router.push("/")
-        }, 1500)
+        signOut({ callbackUrl: "/" })
     }
 
     return (

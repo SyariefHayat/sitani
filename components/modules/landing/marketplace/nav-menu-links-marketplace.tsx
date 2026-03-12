@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { MENU_ITEMS } from "@/lib/constants"
 import { CircleUserRound, ChevronDown, User, Package, Settings, LogOut } from "lucide-react"
+import { signOut } from "next-auth/react"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -72,7 +73,10 @@ const NavMenuLinksMarketplace = () => {
 
                         <DropdownMenuSeparator />
 
-                        <DropdownMenuItem className="cursor-pointer gap-2.5 py-2.5 text-red-600 focus:text-red-600 focus:bg-red-50">
+                        <DropdownMenuItem
+                            className="cursor-pointer gap-2.5 py-2.5 text-red-600 focus:text-red-600 focus:bg-red-50"
+                            onClick={() => signOut({ callbackUrl: "/" })}
+                        >
                             <LogOut className="w-4 h-4" />
                             Keluar
                         </DropdownMenuItem>

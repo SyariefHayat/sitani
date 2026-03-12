@@ -12,29 +12,22 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { useSelector, useDispatch } from "react-redux"
 import { selectCartItems, selectCartCount, selectCartTotal, removeFromCart } from "@/lib/redux/cart-slice"
 import Image from "next/image"
 import { Trash2 } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
-import { toast } from "sonner"
+import { signOut } from "next-auth/react"
 
 const NavUserProfile = () => {
     const dispatch = useDispatch()
-    const router = useRouter()
     const items = useSelector(selectCartItems)
     const count = useSelector(selectCartCount)
     const total = useSelector(selectCartTotal)
     const previewItems = items.slice(-3).reverse()
 
     const handleLogout = () => {
-        toast.success("Berhasil keluar dari akun", {
-            description: "Anda telah keluar. Mengarahkan ke halaman utama...",
-        })
-        setTimeout(() => {
-            router.push("/")
-        }, 1500)
+        signOut({ callbackUrl: "/" })
     }
 
 

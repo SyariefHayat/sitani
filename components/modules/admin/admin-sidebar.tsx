@@ -4,6 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { signOut } from 'next-auth/react'
 import {
     LayoutDashboard,
     Users,
@@ -75,7 +76,10 @@ const AdminSidebar = () => {
                         <p className="text-[11px] text-white/50 truncate">Admin Utama</p>
                     </div>
                 </div>
-                <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-white/60 hover:text-white hover:bg-white/10 transition-all w-full">
+                <button
+                    onClick={() => signOut({ callbackUrl: "/" })}
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-white/60 hover:text-white hover:bg-white/10 transition-all w-full cursor-pointer"
+                >
                     <LogOut className="w-[18px] h-[18px]" />
                     <span>Keluar</span>
                 </button>

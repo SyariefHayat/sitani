@@ -490,7 +490,7 @@ const UsersContent = () => {
                       </td>
                       <td className="py-3">
                         <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#1a4528] to-[#3d7a52] flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                          <div className="w-9 h-9 rounded-full bg-linear-to-br from-[#1a4528] to-[#3d7a52] flex items-center justify-center text-white text-xs font-bold shrink-0">
                             {initials}
                           </div>
                           <div className="min-w-0">
@@ -625,7 +625,7 @@ const UsersContent = () => {
             className="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-gradient-to-r from-[#1a4528] to-[#3d7a52] p-6 text-white relative">
+            <div className="bg-linear-to-r from-[#1a4528] to-[#3d7a52] p-6 text-white relative">
               <button
                 onClick={() => setDetailUser(null)}
                 className="absolute top-4 right-4 p-1 rounded-lg hover:bg-white/20"
