@@ -5,8 +5,8 @@ import { NextResponse } from "next/server";
 const roleRouteMap: Record<string, string[]> = {
   "/distributor": ["distributor"],
   "/investasi": ["investor"],
-  "/marketplace": ["pembeli"],
-  "/academy": ["admin"],
+  "/marketplace": ["pembeli", "petani"],
+  "/academy": ["admin", "peserta"],
   "/logistik": ["logistik"],
   "/dashboard": ["admin"],
 };
